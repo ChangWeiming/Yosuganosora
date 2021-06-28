@@ -8,7 +8,7 @@
 
 #include "STR_ItemData.generated.h"
 
-//class AItem;
+class AItem;
 
 USTRUCT(BlueprintType)
 struct EASYSURVIVALRPG_API FSTR_ItemData
@@ -34,8 +34,8 @@ public:
 	FText Description;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UTexture2D* Icon;
-//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-//	AItem* ItemClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	AItem* ItemClass;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 MaxStack;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -45,9 +45,9 @@ public:
 
 	//Maps to basic info
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TMap<FName, UStaticMeshComponent*> StaticMeshes;
+	TMap<FName, UStaticMesh*> StaticMeshes;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TMap<FName, UStaticMeshComponent*> SkeletalMeshes;
+	TMap<FName, UStaticMesh*> SkeletalMeshes;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TMap<FName, USoundBase*> Sounds;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

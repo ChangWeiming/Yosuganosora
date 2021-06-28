@@ -22,72 +22,142 @@ void UItemsLibrary::ItemInstanceIsValid(FSTR_ItemInstance ItemInstance, UObject*
 	IsValid = UKismetMathLibrary::NotEqual_NameName(ItemInstance.ItemHandle.RowName, FName(TEXT("None")));
 }
 
-//void UItemsLibrary::GetItemDropMesh(FSTR_ItemData Item, UObject* WorldContext,
-//	/*输出*/ UStaticMesh*& StaticMesh)
-//{
-//	TArray<UStaticMesh*> staticMeshes;
-//	UStaticMesh* resMesh;
-//	staticMeshes.Reset();
-//
-//	FCustomThunkTemplates::Map_Values(Item.StaticMeshes, 
-//		staticMeshes);
-//
-//	FCustomThunkTemplates::Array_Get(staticMeshes, 0,
-//		resMesh);
-//
-//	StaticMesh = resMesh;
-//}
-//
-//void UItemsLibrary::GetItemIcon(FSTR_ItemData Item, UObject* WorldContext, 
-//	/*输出*/ UTexture2D*& Icon)
-//{
-//	Icon = Item.Icon;
-//}
-//
-//void UItemsLibrary::GetItemAmount(FSTR_ItemData Item, UObject* WorldContext, 
-//	/*输出*/ int32& Amount)
-//{
-//	Amount = Item.Amount;
-//}
-//
-////unimplemented.
-//void UItemsLibrary::MakeItem(FSTR_ItemInstance ItemInstance, int32 Amount, int32 Charges, float Durability, float Decay, UObject* WorldContext,
-//	/*输出*/ FSTR_ItemData& Item)
-//{
-//
-//	//float bpfv__CallFunc_MakeItemDecay_ResultDecay__pf{};
-//	//float bpfv__CallFunc_MakeItemDurability_ResultDurability__pf{};
-//	//int32 bpfv__CallFunc_MakeItemCharges_ResultCharges__pf{};
-//	//int32 bpfv__CallFunc_MakeItemAmount_ResultAmount__pf{};
-//	//FSTR_ItemData bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf{};
-//	//UBP_ItemsLibrary_C__pf2791831416::bpf__MakeItemDecay__pf(bpp__ItemInstance__pf, bpp__Decay__pf, bpp____WorldContext__pf, /*out*/ bpfv__CallFunc_MakeItemDecay_ResultDecay__pf);
-//	//UBP_ItemsLibrary_C__pf2791831416::bpf__MakeItemDurability__pf(bpp__ItemInstance__pf, bpp__Durability__pf, bpp____WorldContext__pf, /*out*/ bpfv__CallFunc_MakeItemDurability_ResultDurability__pf);
-//	//UBP_ItemsLibrary_C__pf2791831416::bpf__MakeItemCharges__pf(bpp__ItemInstance__pf, bpp__Charges__pf, bpp____WorldContext__pf, /*out*/ bpfv__CallFunc_MakeItemCharges_ResultCharges__pf);
-//	//UBP_ItemsLibrary_C__pf2791831416::bpf__MakeItemAmount__pf(bpp__ItemInstance__pf, bpp__Amount__pf, bpp____WorldContext__pf, /*out*/ bpfv__CallFunc_MakeItemAmount_ResultAmount__pf);
-//	//
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__ItemHandle_60_EFC3446F4BEB3A00026CE2A9EAC341F7__pf = bpp__ItemInstance__pf.bpv__ItemHandle_60_EFC3446F4BEB3A00026CE2A9EAC341F7__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__Amount_63_A266101D46331E1C405B5BBCCD66B5AB__pf = bpfv__CallFunc_MakeItemAmount_ResultAmount__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__Charges_71_A809A459457F6D92E0E74AB2D742ADB8__pf = bpfv__CallFunc_MakeItemCharges_ResultCharges__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__Durability_66_D195200D4BAEAC1676AF609078EDE41E__pf = bpfv__CallFunc_MakeItemDurability_ResultDurability__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__Decay_68_E490FBE7490669BCE570D8A5710506E6__pf = bpfv__CallFunc_MakeItemDecay_ResultDecay__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__Name_6_4BDAD3B24B564228353D28A42C703448__pf = bpp__ItemInstance__pf.bpv__Name_6_4BDAD3B24B564228353D28A42C703448__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__Description_8_4DA029524B4A3B9B74B569AF7F7F5DB0__pf = bpp__ItemInstance__pf.bpv__Description_8_4DA029524B4A3B9B74B569AF7F7F5DB0__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__Icon_11_F8EF38624C72890DA50093880E07917C__pf = bpp__ItemInstance__pf.bpv__Icon_11_F8EF38624C72890DA50093880E07917C__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__ItemClass_14_AA51AFF34BD012A351C36281D08F9B78__pf = bpp__ItemInstance__pf.bpv__ItemClass_14_AA51AFF34BD012A351C36281D08F9B78__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__MaxStack_17_A4F940864DC6C3A24983778907BB130E__pf = bpp__ItemInstance__pf.bpv__MaxStack_17_A4F940864DC6C3A24983778907BB130E__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__MaxCharges_73_357A31704B4E589ACF82A18CD67D16E3__pf = bpp__ItemInstance__pf.bpv__MaxCharges_63_D792FD1F4FDC22176F4DA8BAC079893A__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__MaxDurability_20_1F5A413E4DE4565794CBD38CAAF2CAD9__pf = bpp__ItemInstance__pf.bpv__MaxDurability_20_1F5A413E4DE4565794CBD38CAAF2CAD9__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__StaticMeshes_25_A44D2C0C4E832E870564D19516B88B6C__pf = bpp__ItemInstance__pf.bpv__StaticMeshes_25_A44D2C0C4E832E870564D19516B88B6C__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__SkeletalMeshes_28_87099CA448794492DB1D77A7109F9F85__pf = bpp__ItemInstance__pf.bpv__SkeletalMeshes_28_87099CA448794492DB1D77A7109F9F85__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__Sounds_31_76D5931E49F01DCACD53A7AF5063E60D__pf = bpp__ItemInstance__pf.bpv__Sounds_31_76D5931E49F01DCACD53A7AF5063E60D__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__Handles_79_D505B92D40B7AE8A2E9A87956B714B48__pf = bpp__ItemInstance__pf.bpv__Handles_68_3096FD37466273FC863D41933A1A1E1C__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__ItemTags_35_3503C2784ACEE59E3DACB1B8942FF342__pf = bpp__ItemInstance__pf.bpv__ItemTags_35_3503C2784ACEE59E3DACB1B8942FF342__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__CostValue_38_AA83680B4E31011115A326BE65A10D1F__pf = bpp__ItemInstance__pf.bpv__CostValue_38_AA83680B4E31011115A326BE65A10D1F__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__EquipmentAttributes_42_EA72711E462B319EAEF758964FF2416D__pf = bpp__ItemInstance__pf.bpv__EquipmentAttributes_42_EA72711E462B319EAEF758964FF2416D__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__CanDecay_46_96E3158549B32F3C6EEBCCAC8295D6F7__pf = bpp__ItemInstance__pf.bpv__CanDecay_46_96E3158549B32F3C6EEBCCAC8295D6F7__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__DecayTime_49_86CE08D946E11088D8954BB60A4A0B52__pf = bpp__ItemInstance__pf.bpv__DecayTime_49_86CE08D946E11088D8954BB60A4A0B52__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__DecayItem_52_161D62BC415C10968590E3A537C23426__pf = bpp__ItemInstance__pf.bpv__DecayItem_52_161D62BC415C10968590E3A537C23426__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__Weight_55_C78AF7A54A57615655795E9CE6AAF111__pf = bpp__ItemInstance__pf.bpv__Weight_55_C78AF7A54A57615655795E9CE6AAF111__pf;
-//	//bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf.bpv__UseAbilityClass_58_C99871DC465C861810BA07B35CF2FD7F__pf = bpp__ItemInstance__pf.bpv__UseAbilityClass_58_C99871DC465C861810BA07B35CF2FD7F__pf;
-//	//bpp__Item__pf = bpfv__K2Node_MakeStruct_DEPRECATED_STR_ItemData__pf;
-//}
+void UItemsLibrary::GetItemDropMesh(FSTR_ItemData Item, UObject* WorldContext,
+	/*输出*/ UStaticMesh*& StaticMesh)
+{
+	TArray<UStaticMesh*> staticMeshes;
+	UStaticMesh* resMesh;
+	staticMeshes.Reset();
+
+	FCustomThunkTemplates::Map_Values(Item.StaticMeshes, 
+		staticMeshes);
+
+	FCustomThunkTemplates::Array_Get(staticMeshes, 0,
+		resMesh);
+
+	StaticMesh = resMesh;
+}
+
+void UItemsLibrary::GetItemIcon(FSTR_ItemData Item, UObject* WorldContext, 
+	/*输出*/ UTexture2D*& Icon)
+{
+	Icon = Item.Icon;
+}
+
+void UItemsLibrary::GetItemAmount(FSTR_ItemData Item, UObject* WorldContext, 
+	/*输出*/ int32& Amount)
+{
+	Amount = Item.Amount;
+}
+
+//unimplemented.
+void UItemsLibrary::MakeItem(FSTR_ItemInstance ItemInstance, int32 Amount, int32 Charges, float Durability, float Decay, UObject* WorldContext,
+	/*输出*/ FSTR_ItemData& Item)
+{
+	float clampedDecay{};
+	float clampedDuribility{};
+	int32 clampedCharges{};
+	int32 clampedAmount{};
+	
+	UItemsLibrary::MakeItemDecay(ItemInstance, Decay, WorldContext, 
+		/*out*/ clampedDecay);
+	UItemsLibrary::MakeItemDurability(ItemInstance, Durability, WorldContext, 
+		/*out*/ clampedDuribility);
+	UItemsLibrary::MakeItemCharges(ItemInstance, Charges, WorldContext, 
+		/*out*/ clampedCharges);
+	UItemsLibrary::MakeItemAmount(ItemInstance, Amount, WorldContext, 
+		/*out*/ clampedAmount);
+	
+	Item.ItemHandle = ItemInstance.ItemHandle;
+	Item.Amount = clampedAmount;
+	Item.Charges = clampedCharges;
+	Item.Durability = clampedDuribility;
+	Item.Decay = clampedDecay;
+	Item.Name = ItemInstance.Name;
+	Item.Description = ItemInstance.Description;
+	Item.Icon = ItemInstance.Icon;
+	Item.ItemClass = ItemInstance.ItemClass;
+	Item.MaxStack = ItemInstance.MaxStack;
+	Item.MaxCharges = ItemInstance.MaxCharges;
+	Item.MaxDurability = ItemInstance.MaxDurability;
+	Item.StaticMeshes = ItemInstance.StaticMeshes;
+	Item.SkeletalMeshes = ItemInstance.SkeletalMeshes;
+	Item.Sounds = ItemInstance.Sounds;
+	Item.Handles = ItemInstance.Handles;
+	Item.ItemTags = ItemInstance.ItemTags;
+//	Item.CostValue= ItemInstance.CostValue;
+//	Item.EquipmentAttributes = ItemInstance.EquipmentAttributes;
+	Item.CanDecay = ItemInstance.CanDecay;
+	Item.DecayTime = ItemInstance.DecayTime;
+	Item.DecayItem = ItemInstance.DecayItem;
+	Item.Weight = ItemInstance.Weight;
+//	Item.UseAbilityClass = ItemInstance.UseAbility;
+}
+void UItemsLibrary::MakeItemAmount(FSTR_ItemInstance const& ItemInstance_const, int32 Amount, UObject* WorldContext, 
+	/*out*/ int32& resAmount)
+{
+	FSTR_ItemInstance& ItemInstance = *const_cast<FSTR_ItemInstance *>(&ItemInstance_const);
+	int32 selectDefault{};
+
+	resAmount = UKismetMathLibrary::Clamp(TSwitchValue<bool, int32 >(
+		UKismetMathLibrary::EqualEqual_IntInt(Amount, 0) ,
+		selectDefault, 2,
+		TSwitchPair<bool, int32 >(false, Amount),
+		TSwitchPair<bool, int32 >(true, ItemInstance.MaxStack)),
+		0, ItemInstance.MaxStack);
+}
+
+void UItemsLibrary::MakeItemDurability(FSTR_ItemInstance const& ItemInstance_const, float Durability, UObject* WorldContext, 
+	/*out*/ float& resDurability)
+{
+	FSTR_ItemInstance& ItemInstance = *const_cast<FSTR_ItemInstance *>(&ItemInstance_const);
+	float selectDefault{};
+
+	resDurability = UKismetMathLibrary::FClamp(TSwitchValue<bool, float >(
+		UKismetMathLibrary::Less_FloatFloat(Durability, 0.000000),
+		selectDefault, 2,
+		TSwitchPair<bool, float >(false, Durability),
+		TSwitchPair<bool, float >(true, ItemInstance.MaxDurability)),
+		0.000000, ItemInstance.MaxDurability);
+}
+
+void UItemsLibrary::MakeItemDecay(FSTR_ItemInstance const& ItemInstance_const, float Decay, UObject* WorldContext, 
+	/*out*/ float& resDecay)
+{
+	FSTR_ItemInstance& ItemInstance = *const_cast<FSTR_ItemInstance *>(&ItemInstance_const);
+
+	bool isDecayEqualZero{};
+	float floatV{};
+	float selectDefault{};
+	float selectDefault1{};
+
+	isDecayEqualZero = UKismetMathLibrary::EqualEqual_FloatFloat(Decay, 0.000000);
+
+	floatV = 0.000000;
+
+	resDecay = UKismetMathLibrary::FClamp(
+		TSwitchValue<bool, float >(ItemInstance.CanDecay, selectDefault1,
+			2,
+			TSwitchPair<bool, float >(false, floatV),
+			TSwitchPair<bool, float >(true,
+				TSwitchValue<bool, float >(isDecayEqualZero, selectDefault,
+					2,
+					TSwitchPair<bool, float >(false, Decay),
+					TSwitchPair<bool, float >(true, ItemInstance.DecayTime)))),
+		0.000000, ItemInstance.DecayTime);
+}
+
+void UItemsLibrary::MakeItemCharges(FSTR_ItemInstance const& ItemInstance_const, int32 Charges, UObject* WorldContext,
+	/*out*/ int32& resCharges)
+{
+	FSTR_ItemInstance& ItemInstance = *const_cast<FSTR_ItemInstance *>(&ItemInstance_const);
+	int32 selectDefault{};
+
+	resCharges = UKismetMathLibrary::Clamp(TSwitchValue<bool, int32 >(
+		UKismetMathLibrary::Less_IntInt(Charges, 0),
+		selectDefault,
+		2,
+		TSwitchPair<bool, int32 >(false, Charges),
+		TSwitchPair<bool, int32 >(true, ItemInstance.MaxCharges)),
+		0, ItemInstance.MaxCharges);
+}

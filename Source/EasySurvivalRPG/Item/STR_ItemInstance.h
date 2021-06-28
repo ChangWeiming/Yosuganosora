@@ -41,9 +41,9 @@ public:
 
 	//Maps to basic info
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TMap<FName, UStaticMeshComponent*> StaticMeshes;
+	TMap<FName, UStaticMesh*> StaticMeshes;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TMap<FName, UStaticMeshComponent*> SkeletalMeshes;
+	TMap<FName, UStaticMesh*> SkeletalMeshes;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TMap<FName, USoundBase*> Sounds;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
