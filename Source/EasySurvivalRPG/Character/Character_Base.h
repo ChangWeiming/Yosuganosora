@@ -85,8 +85,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State|Interactions")
 		float TargetSpeed = 0.0;
 
-	//UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Replicated, meta = (DisplayName = "Is Enabled AI", Category = "State|AI", OverrideNativeName = "IsEnabledAI"))
-		//bool IsEnabledAI = true;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite,  meta = (DisplayName = "Is Enabled AI", Category = "State|AI", OverrideNativeName = "IsEnabledAI"))
+		bool IsEnabledAI = true;
 	//UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Replicated, meta = (DisplayName = "Guard Location", Category = "State|AI", OverrideNativeName = "GuardLocation"))
 		//FVector GuardLocation = FVector(0.0, 0.0, 0.0);
 	//PROPERTY(EditDefaultsOnly, BlueprintReadWrite, Replicated, meta = (DisplayName = "Is Scared", Category = "State|AI", OverrideNativeName = "IsScared"))
@@ -147,9 +147,26 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "State")
 		bool ChangeEnergy(float Value, bool Percent);
 
-	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Interactions|Base", Tooltip = "Returns true if character can interact.", OverrideNativeName = "IsCanInteract"))
+	//Enable AI.
+	UFUNCTION(BlueprintCallable, meta = (Category = "AI", OverrideNativeName = "EnableAI"))
+		virtual void EnableAI();
+
+	//Disable AI
+	UFUNCTION(BlueprintCallable, meta = (Category = "AI", OverrideNativeName = "DisableAI"))
+		virtual void DisableAI();
+
+	//Returns true if character can interact.
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Interactions|Base", OverrideNativeName = "IsCanInteract"))
 		virtual void IsCanInteract(/*Êä³ö*/ bool& CanInteract);
 
-	UFUNCTION(BlueprintCallable, meta = (Category = "Interactions|Base", Tooltip = "Set character interaction state.", OverrideNativeName = "SetInteractionState"))
+	//Actions when the character dies.
+	//UFUNCTION(BlueprintCallable, meta = (Category = "Interactions|Base", OverrideNativeName = "Death"))
+		//virtual void Death(AController* KillerController, 
+			///*out*/ bool& Success);
+
+	//Set character interaction state.
+	UFUNCTION(BlueprintCallable, meta = (Category = "Interactions|Base", OverrideNativeName = "SetInteractionState"))
 		virtual void SetInteractionState(EE_InteractionState Selection, bool State);
+
+
 };

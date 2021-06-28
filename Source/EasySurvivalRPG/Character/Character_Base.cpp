@@ -1,9 +1,10 @@
 // Easy Systems
 
-
 #include "Character_Base.h"
 #include "Runtime/Engine/Classes/Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "GeneratedCodeHelpers.h"
 #include<algorithm>
 
@@ -71,6 +72,46 @@ bool ACharacter_Base::ChangeEnergy(float Value, bool Percent)
 	return true;
 }
 
+void ACharacter_Base::EnableAI()
+{
+	FName MakeLiteralName_ReturnValue{};
+	UBlackboardComponent* GetBlackboard_ReturnValue{};
+	bool IsValid_ReturnValue{};
+
+	GetBlackboard_ReturnValue = UAIBlueprintHelperLibrary::GetBlackboard(this);
+	IsValid_ReturnValue = UKismetSystemLibrary::IsValid(GetBlackboard_ReturnValue);
+	if (!IsValid_ReturnValue)
+	{
+
+	}
+	else
+	{
+		IsEnabledAI = true;
+		MakeLiteralName_ReturnValue = UKismetSystemLibrary::MakeLiteralName(FName(TEXT("IsEnabledAI")));
+		GetBlackboard_ReturnValue->UBlackboardComponent::SetValueAsBool(MakeLiteralName_ReturnValue, IsEnabledAI);
+	}
+}
+
+void ACharacter_Base::DisableAI()
+{
+	FName MakeLiteralName_ReturnValue{};
+	UBlackboardComponent* GetBlackboard_ReturnValue{};
+	bool IsValid_ReturnValue{};
+
+	GetBlackboard_ReturnValue = UAIBlueprintHelperLibrary::GetBlackboard(this);
+	IsValid_ReturnValue = UKismetSystemLibrary::IsValid(GetBlackboard_ReturnValue);
+	if (!IsValid_ReturnValue)
+	{
+
+	}
+	else
+	{
+		IsEnabledAI = false;
+		MakeLiteralName_ReturnValue = UKismetSystemLibrary::MakeLiteralName(FName(TEXT("IsEnabledAI")));
+		GetBlackboard_ReturnValue->UBlackboardComponent::SetValueAsBool(MakeLiteralName_ReturnValue, IsEnabledAI);
+	}
+}
+
 void ACharacter_Base::IsCanInteract(bool & CanInteract)
 {
 	bool IsPlayingRootMotion_ReturnValue{};
@@ -96,7 +137,118 @@ void ACharacter_Base::IsCanInteract(bool & CanInteract)
 	CanInteract = UKismetMathLibrary::BooleanAND(CanInteract, UpperBody);
 	CanInteract = UKismetMathLibrary::BooleanAND(CanInteract, isDashing);
 }
-
+/*
+void ACharacter_Base::Death(AController * KillerController, bool & Success)
+{
+	TScriptInterface<IBPI_Player_C> bpfv__K2Node_DynamicCast_AsBPI_Player__pf{};
+	bool bpfv__K2Node_DynamicCast_bSuccess__pf{};
+	FTimerDynamicDelegate bpfv__K2Node_CreateDelegate_OutputDelegate__pf{};
+	FTimerHandle bpfv__CallFunc_K2_SetTimerDelegate_ReturnValue__pf{};
+	AAIController* bpfv__CallFunc_GetAIController_ReturnValue__pf{};
+	bool bpfv__CallFunc_IsValid_ReturnValue__pf{};
+	int32 __CurrentState = 17;
+	do
+	{
+		switch (__CurrentState)
+		{
+		case 17:
+		{
+		}
+		case 1:
+		{
+			AActor::FlushNetDormancy();
+		}
+		case 2:
+		{
+			IsAlive= false;
+		}
+		case 3:
+		{
+			AActor::FlushNetDormancy();
+		}
+		case 4:
+		{
+			bCanBeDamaged = false;
+		}
+		case 5:
+		{
+			OnDeath.Broadcast(this, bpp__KillerController__pf);
+		}
+		case 6:
+		{
+			if (bpp__KillerController__pf && bpp__KillerController__pf->GetClass()->ImplementsInterface(UBPI_Player_C::StaticClass()))
+			{
+				bpfv__K2Node_DynamicCast_AsBPI_Player__pf.SetObject(bpp__KillerController__pf);
+				void* IAddress = bpp__KillerController__pf->GetInterfaceAddress(UBPI_Player_C::StaticClass());
+				bpfv__K2Node_DynamicCast_AsBPI_Player__pf.SetInterface(IAddress);
+			}
+			else
+			{
+				bpfv__K2Node_DynamicCast_AsBPI_Player__pf.SetObject(nullptr);
+			}
+			bpfv__K2Node_DynamicCast_bSuccess__pf = (bpfv__K2Node_DynamicCast_AsBPI_Player__pf != nullptr);;
+			if (!bpfv__K2Node_DynamicCast_bSuccess__pf)
+			{
+				__CurrentState = 8;
+				break;
+			}
+		}
+		case 7:
+		{
+			if (::IsValid(bpfv__K2Node_DynamicCast_AsBPI_Player__pf))
+			{
+				IBPI_Player_C::Execute_bpf__PlayerKillCharacter_BPI__pf(bpfv__K2Node_DynamicCast_AsBPI_Player__pf.GetObject(), this);
+			}
+		}
+		case 8:
+		{
+			bpf__StopAnimationxxMulticastx__pfTLK(0.000000, FName(TEXT("None")));
+		}
+		case 9:
+		{
+			bpfv__K2Node_CreateDelegate_OutputDelegate__pf.BindUFunction(this, FName(TEXT("DestroyCharacterOnDeath")));
+			bpfv__CallFunc_K2_SetTimerDelegate_ReturnValue__pf = UKismetSystemLibrary::K2_SetTimerDelegate(bpfv__K2Node_CreateDelegate_OutputDelegate__pf, bpv__DestroyCharacterTimer__pf, false, 0.000000, 0.000000);
+		}
+		case 10:
+		{
+		}
+		case 11:
+		{
+		}
+		case 12:
+		{
+			bpfv__CallFunc_GetAIController_ReturnValue__pf = UAIBlueprintHelperLibrary::GetAIController(this);
+			bpfv__CallFunc_IsValid_ReturnValue__pf = UKismetSystemLibrary::IsValid(bpfv__CallFunc_GetAIController_ReturnValue__pf);
+			if (!bpfv__CallFunc_IsValid_ReturnValue__pf)
+			{
+				__CurrentState = 16;
+				break;
+			}
+		}
+		case 13:
+		{
+		}
+		case 14:
+		{
+			DisableAI();
+		}
+		case 15:
+		{
+			Success = true;
+			__CurrentState = -1;
+			break;
+		}
+		case 16:
+		{
+			__CurrentState = 15;
+			break;
+		}
+		default:
+			break;
+		}
+	} while (__CurrentState != -1);
+}
+*/
 void ACharacter_Base::SetInteractionState(EE_InteractionState Selection, bool State)
 {
 	bool SwitchOnEnum_IsSuccess{};
