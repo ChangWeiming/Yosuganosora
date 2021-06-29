@@ -5,6 +5,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Camera/PlayerCameraManager.h"
+#include "Kismet/GameplayStatics.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "GeneratedCodeHelpers.h"
 #include<algorithm>
@@ -97,12 +98,31 @@ bool ACharacter_Base::ChangeEnergy(float Value, bool Percent)
 	}
 	return true;
 }
-/*
+
 void ACharacter_Base::UpdateStateWidgetRotation()
 {
-	
+	FVector GetCameraLocation_ReturnValue(EForceInit::ForceInit);
+	FVector GetComponentLocation_ReturnValue(EForceInit::ForceInit);
+	FRotator FindLookAtRotation_ReturnValue(EForceInit::ForceInit);
+	FHitResult SetWorldRotation_SweepHitResult{};
+	APlayerCameraManager* GetPlayerCameraManager_ReturnValue{};
+	if (::IsValid(StateWidget))
+	{
+		if (StateWidget->IsVisible())
+		{
+			StateWidget->USceneComponent::SetHiddenInGame(!IsAlive, false);
+		}
+		GetPlayerCameraManager_ReturnValue = UGameplayStatics::GetPlayerCameraManager(this, 0);
+		if (::IsValid(GetPlayerCameraManager_ReturnValue))
+		{
+			GetCameraLocation_ReturnValue = GetPlayerCameraManager_ReturnValue->GetCameraLocation();
+			GetComponentLocation_ReturnValue = StateWidget->USceneComponent::GetComponentLocation();
+			FindLookAtRotation_ReturnValue = UKismetMathLibrary::FindLookAtRotation(GetComponentLocation_ReturnValue, GetCameraLocation_ReturnValue);
+			StateWidget->USceneComponent::K2_SetWorldRotation(FindLookAtRotation_ReturnValue, false, /*out*/ SetWorldRotation_SweepHitResult, false);
+		}
+	}
 }
-*/
+
 void ACharacter_Base::EnableAI()
 {
 	FName MakeLiteralName_ReturnValue{};

@@ -151,8 +151,8 @@ public:
 		bool ChangeEnergy(float Value, bool Percent);
 
 	//Rotate state widget's face to the local player controller.
-	//UFUNCTION(BlueprintCallable, meta = (Category = "State", OverrideNativeName = "UpdateStateWidgetRotation"))
-		//virtual void UpdateStateWidgetRotation();
+	UFUNCTION(BlueprintCallable, meta = (Category = "State", OverrideNativeName = "UpdateStateWidgetRotation"))
+		virtual void UpdateStateWidgetRotation();
 
 	//Enable AI.
 	UFUNCTION(BlueprintCallable, meta = (Category = "AI", OverrideNativeName = "EnableAI"))
