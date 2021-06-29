@@ -4,6 +4,8 @@
 #include "Runtime/Engine/Classes/Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Camera/PlayerCameraManager.h"
+#include "Kismet/GameplayStatics.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "GeneratedCodeHelpers.h"
 #include<algorithm>
@@ -57,6 +59,31 @@ void ACharacter_Base::SetEnergyValues(float MaxEnegytemp, float EnergyRegenerati
 }
 
 
+void ACharacter_Base::ChangeHealth(float Value, bool Percent, AController * InstigatedBy, bool & Success)
+{
+	bool Death_Success{};
+	if (IsAlive)
+	{
+		float temp = UKismetMathLibrary::Multiply_FloatFloat(Value, MaxHealth);
+		if (!Percent)
+			temp = Value;
+		temp = UKismetMathLibrary::Add_FloatFloat(Health, temp);
+		Health = UKismetMathLibrary::FClamp(temp, 0.0, MaxHealth);
+		if (Health <= 0)
+		{
+			Death(InstigatedBy, /*out*/ Death_Success);
+			Success = true;
+		}
+		else
+			Success = true;
+	}
+	else
+	{
+		Success = true;
+	}
+
+}
+
 bool ACharacter_Base::ChangeEnergy(float Value, bool Percent)
 {
 	if (Percent == true)
@@ -70,6 +97,30 @@ bool ACharacter_Base::ChangeEnergy(float Value, bool Percent)
 		Energy = min(Value + Energy, MaxEnergy);
 	}
 	return true;
+}
+
+void ACharacter_Base::UpdateStateWidgetRotation()
+{
+	FVector GetCameraLocation_ReturnValue(EForceInit::ForceInit);
+	FVector GetComponentLocation_ReturnValue(EForceInit::ForceInit);
+	FRotator FindLookAtRotation_ReturnValue(EForceInit::ForceInit);
+	FHitResult SetWorldRotation_SweepHitResult{};
+	APlayerCameraManager* GetPlayerCameraManager_ReturnValue{};
+	if (::IsValid(StateWidget))
+	{
+		if (StateWidget->IsVisible())
+		{
+			StateWidget->USceneComponent::SetHiddenInGame(!IsAlive, false);
+		}
+		GetPlayerCameraManager_ReturnValue = UGameplayStatics::GetPlayerCameraManager(this, 0);
+		if (::IsValid(GetPlayerCameraManager_ReturnValue))
+		{
+			GetCameraLocation_ReturnValue = GetPlayerCameraManager_ReturnValue->GetCameraLocation();
+			GetComponentLocation_ReturnValue = StateWidget->USceneComponent::GetComponentLocation();
+			FindLookAtRotation_ReturnValue = UKismetMathLibrary::FindLookAtRotation(GetComponentLocation_ReturnValue, GetCameraLocation_ReturnValue);
+			StateWidget->USceneComponent::K2_SetWorldRotation(FindLookAtRotation_ReturnValue, false, /*out*/ SetWorldRotation_SweepHitResult, false);
+		}
+	}
 }
 
 void ACharacter_Base::EnableAI()
@@ -398,4 +449,30 @@ void ACharacter_Base::SetInteractionState(EE_InteractionState Selection, bool St
 			break;
 		}
 	} while (CurrentState != -1);
+}
+
+void ACharacter_Base::TryAttack(bool & Success)
+{
+	bool CanInteract{};
+	if (IsAttacking)
+	{
+		TryContinueAttack = true;
+		Success = true;
+	}
+	else
+	{
+		IsCanInteract(CanInteract);
+		if (CanInteract)
+		{
+			TryContinueAttack = false;
+		}
+		else
+			Success = false;
+	}
+}
+
+
+void ACharacter_Base::Death_Implementation(AController * KillerController, bool & Success)
+{
+
 }
