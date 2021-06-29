@@ -8,6 +8,7 @@
 #include"Engine/DataTable.h"
 #include"EasySurvivalRPG/Enumerations/E_Fraction.h"
 #include"EasySurvivalRPG/Enumerations/E_InteractionState.h"
+#include "Components/WidgetComponent.h"
 #include "Character_Base.generated.h"
 
 UCLASS()
@@ -128,9 +129,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (DisplayName = "Is Dashing", Category = "Interactions|Base", MultiLine = "true", OverrideNativeName = "isDashing"))
 		bool isDashing = false;
 
-	
-
-
+public:
+	UPROPERTY(BlueprintReadWrite, NonTransactional, meta = (Category = "Components", OverrideNativeName = "StateWidget"))
+		UWidgetComponent* StateWidget;
 
 
 
@@ -141,11 +142,17 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "State")
 		void SetEnergyValues(float MaxEnegytemp, float EnergyRegenerationtemp);
 	
-	//UFUNCTION(BlueprintCallable, meta = (Category = "State", Tooltip = "Change health value.", OverrideNativeName = "ChangeHealth"))
-		//virtual void ChangeHealth(float Value, bool Percent, AController* InstigatedBy, /*Êä³ö*/ bool& Success);
+	//Change health value
+	UFUNCTION(BlueprintCallable, meta = (Category = "State", OverrideNativeName = "ChangeHealth"))
+		virtual void ChangeHealth(float Value, bool Percent, AController* InstigatedBy,
+			/*out*/ bool& Success);
 	
 	UFUNCTION(BlueprintCallable, Category = "State")
 		bool ChangeEnergy(float Value, bool Percent);
+
+	//Rotate state widget's face to the local player controller.
+	//UFUNCTION(BlueprintCallable, meta = (Category = "State", OverrideNativeName = "UpdateStateWidgetRotation"))
+		//virtual void UpdateStateWidgetRotation();
 
 	//Enable AI.
 	UFUNCTION(BlueprintCallable, meta = (Category = "AI", OverrideNativeName = "EnableAI"))
@@ -159,14 +166,16 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Interactions|Base", OverrideNativeName = "IsCanInteract"))
 		virtual void IsCanInteract(/*Êä³ö*/ bool& CanInteract);
 
-	//Actions when the character dies.
-	//UFUNCTION(BlueprintCallable, meta = (Category = "Interactions|Base", OverrideNativeName = "Death"))
-		//virtual void Death(AController* KillerController, 
-			///*out*/ bool& Success);
 
 	//Set character interaction state.
 	UFUNCTION(BlueprintCallable, meta = (Category = "Interactions|Base", OverrideNativeName = "SetInteractionState"))
 		virtual void SetInteractionState(EE_InteractionState Selection, bool State);
 
+	//Try to attack or continue attack.
+	UFUNCTION(BlueprintCallable, meta = (Category = "Interactions|Combat", OverrideNativeName = "TryAttack"))
+		virtual void TryAttack(/*out*/ bool& Success);
 
+	//NATIVE EVENT
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+		void Death(AController* KillerController,/*out*/ bool& Success);
 };
