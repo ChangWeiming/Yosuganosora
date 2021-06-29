@@ -161,3 +161,41 @@ void UItemsLibrary::MakeItemCharges(FSTR_ItemInstance const& ItemInstance_const,
 		TSwitchPair<bool, int32 >(true, ItemInstance.MaxCharges)),
 		0, ItemInstance.MaxCharges);
 }
+
+void UItemsLibrary::GetItemID(FSTR_ItemData Item, UObject* WorldContext,
+	/*out*/ FName& ItemID)
+{
+	ItemID = Item.ItemHandle.RowName;
+}
+
+void UItemsLibrary::RemoveFromItemAmount(FSTR_ItemData Item, int32 AmountToRemove, UObject* WorldContext,
+	/*out*/ bool& WasRemoved, /*out*/ FSTR_ItemData& ResultItem, /*out*/ int32& AmountRemoved)
+{
+	int32 itemAmount = 0;
+	GetItemAmount(Item, WorldContext, itemAmount);
+	if (itemAmount >= AmountToRemove) {
+		SetItemAmount(Item, itemAmount - AmountToRemove, WorldContext, ResultItem);
+		AmountRemoved = AmountToRemove;
+		WasRemoved = true;
+	}
+	else {
+		WasRemoved = false;
+		AmountRemoved = 0;
+	}
+}
+
+void UItemsLibrary::SetItemAmount(FSTR_ItemData Item, int32 Amount, UObject* WorldContext, 
+	/*out*/ FSTR_ItemData& ResultItem)
+{
+	FSTR_ItemData bpfv__K2Node_SetFieldsInStruct_StructOut__pf{};
+	Item.Amount = Amount;
+	ResultItem = Item;
+}
+
+void UItemsLibrary::CreateRequiredItemsList(UObject* WorldContext,
+	/*out*/ TArray<FSTR_Item>& RequiredItems, /*out*/ TMap<FName, int32>& ItemsList)
+{
+	for (auto &item : RequiredItems) {
+		ItemsList.Add(item.ItemHandle.RowName, item.Amount);
+	}
+}

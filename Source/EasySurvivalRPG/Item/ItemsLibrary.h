@@ -7,6 +7,7 @@
 #include "Engine/DataTable.h"
 #include "STR_ItemData.h"
 #include "STR_ItemInstance.h"
+#include "STR_Item.h"
 
 #include "ItemsLibrary.generated.h"
 
@@ -71,4 +72,18 @@ public:
 	static void MakeItemCharges(FSTR_ItemInstance const& ItemInstance, int32 Charges, UObject* WorldContext,
 		/*out*/ int32& ResultCharges);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Items Library|Property", WorldContext = "__WorldContext", OverrideNativeName = "GetItemID"))
+	static void GetItemID(FSTR_ItemData Item, UObject* WorldContext, 
+		/*out*/ FName& ItemID);
+	
+	UFUNCTION(BlueprintCallable, meta = (Category = "Items Library|Utility|Calculations", WorldContext = "__WorldContext", OverrideNativeName = "RemoveFromItemAmount"))
+	static void RemoveFromItemAmount(FSTR_ItemData Item, int32 AmountToRemove, UObject* WorldContext,
+		/*out*/ bool& WasRemoved, /*out*/ FSTR_ItemData& ResultItem, /*out*/ int32& AmountRemoved);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Items Library|Utility|Calculations", WorldContext = "__WorldContext", OverrideNativeName = "SetItemAmount"))
+	static void SetItemAmount(FSTR_ItemData Item, int32 Amount, UObject* WorldContext, /*out*/ FSTR_ItemData& ResultItem);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Items Library|Utility|Other", WorldContext = "__WorldContext", OverrideNativeName = "CreateRequiredItemsList"))
+	static void CreateRequiredItemsList(UObject* WorldContext,
+		/*out*/ TArray<FSTR_Item>& RequiredItems, /*out*/ TMap<FName, int32>& ItemsList);
 };
