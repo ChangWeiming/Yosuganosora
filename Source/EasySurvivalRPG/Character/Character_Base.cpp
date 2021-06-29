@@ -4,7 +4,6 @@
 #include "Runtime/Engine/Classes/Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "Camera/PlayerCameraManager.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "GeneratedCodeHelpers.h"
 #include<algorithm>
@@ -58,31 +57,6 @@ void ACharacter_Base::SetEnergyValues(float MaxEnegytemp, float EnergyRegenerati
 }
 
 
-void ACharacter_Base::ChangeHealth(float Value, bool Percent, AController * InstigatedBy, bool & Success)
-{
-	bool Death_Success{};
-	if (IsAlive)
-	{
-		float temp = UKismetMathLibrary::Multiply_FloatFloat(Value, MaxHealth);
-		if (!Percent)
-			temp = Value;
-		temp = UKismetMathLibrary::Add_FloatFloat(Health, temp);
-		Health = UKismetMathLibrary::FClamp(temp, 0.0, MaxHealth);
-		if (Health <= 0)
-		{
-			Death(InstigatedBy, /*out*/ Death_Success);
-			Success = true;
-		}
-		else
-			Success = true;
-	}
-	else
-	{
-		Success = true;
-	}
-
-}
-
 bool ACharacter_Base::ChangeEnergy(float Value, bool Percent)
 {
 	if (Percent == true)
@@ -97,12 +71,7 @@ bool ACharacter_Base::ChangeEnergy(float Value, bool Percent)
 	}
 	return true;
 }
-/*
-void ACharacter_Base::UpdateStateWidgetRotation()
-{
-	
-}
-*/
+
 void ACharacter_Base::EnableAI()
 {
 	FName MakeLiteralName_ReturnValue{};
@@ -429,30 +398,4 @@ void ACharacter_Base::SetInteractionState(EE_InteractionState Selection, bool St
 			break;
 		}
 	} while (CurrentState != -1);
-}
-
-void ACharacter_Base::TryAttack(bool & Success)
-{
-	bool CanInteract{};
-	if (IsAttacking)
-	{
-		TryContinueAttack = true;
-		Success = true;
-	}
-	else
-	{
-		IsCanInteract(CanInteract);
-		if (CanInteract)
-		{
-			TryContinueAttack = false;
-		}
-		else
-			Success = false;
-	}
-}
-
-
-void ACharacter_Base::Death_Implementation(AController * KillerController, bool & Success)
-{
-
 }
