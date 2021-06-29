@@ -59,6 +59,7 @@ void ACharacter_Base::SetEnergyValues(float MaxEnegytemp, float EnergyRegenerati
 }
 
 
+
 void ACharacter_Base::ChangeHealth(float Value, bool Percent, AController * InstigatedBy, bool & Success)
 {
 	bool Death_Success{};

@@ -99,12 +99,12 @@ protected:
 	//UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Replicated, meta = (DisplayName = "Aggressive Actors", Category = "State|AI", OverrideNativeName = "AggressiveActors"))
 		//TArray<AActor*> AggressiveActors;
 
-	/*
+	
 public:
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = "OnRep_CharacterName", meta = (DisplayName = "Character Name", Category = "Settings|Base", OverrideNativeName = "CharacterName"))
 		//FText CharacterName = FText::FromString("Character");
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Character Icon", Category = "Settings|Base", OverrideNativeName = "CharacterIcon"))
-		FSlateBrush CharacterIcon;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Character Icon", Category = "Settings|Base", OverrideNativeName = "CharacterIcon"))
+		//FSlateBrush CharacterIcon;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Show Character State", Category = "Settings|Base", OverrideNativeName = "ShowCharacterState"))
 		bool ShowCharacterState = true;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Show Only Name", Category = "Settings|Base", OverrideNativeName = "ShowOnlyName"))
@@ -115,16 +115,14 @@ public:
 		float WalkSpeed = 200.0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Run Speed", Category = "Settings|Base", OverrideNativeName = "RunSpeed"))
 		float RunSpeed = 400.0;
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Loot Handle", Category = "Settings|Base", OverrideNativeName = "LootHandle"))
-		//FDataTableRowHandle LootHandle;
+
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Ragdoll Bone", Category = "Settings|Base", OverrideNativeName = "RagdollBone"))
-		//FName RagdollBone;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Destroy Character Timer", Category = "Settings|Base", OverrideNativeName = "DestroyCharacterTimer"))
-		float DestroyCharacterTimer = 60.0;
-	*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Fraction", Category = "Settings|Base", OverrideNativeName = "Fraction"))
-		EE_Fraction Fraction;
+		//FName RagdollBone = "pelvis";
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Destroy Character Timer", Category = "Settings|Base", OverrideNativeName = "DestroyCharacterTimer"))
+		//float DestroyCharacterTimer = 60.0;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Fraction", Category = "Settings|Base", OverrideNativeName = "Fraction"))
+		//EE_Fraction Fraction = EE_Fraction::Player;
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (DisplayName = "Is Dashing", Category = "Interactions|Base", MultiLine = "true", OverrideNativeName = "isDashing"))
 		bool isDashing = false;
@@ -141,7 +139,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "State")
 		void SetEnergyValues(float MaxEnegytemp, float EnergyRegenerationtemp);
-	
+
+	//Update walk speed depending on the movement variables.
+	//UFUNCTION(BlueprintCallable, meta = (Category = "State", OverrideNativeName = "UpdateWalkSpeed"))
+		//virtual void UpdateWalkSpeed(/*out*/ bool& Success);
+
 	//Change health value
 	UFUNCTION(BlueprintCallable, meta = (Category = "State", OverrideNativeName = "ChangeHealth"))
 		virtual void ChangeHealth(float Value, bool Percent, AController* InstigatedBy,
