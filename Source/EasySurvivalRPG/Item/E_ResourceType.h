@@ -3,10 +3,10 @@
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
 
-#include "STR_Attribute.generated.h"
+#include "E_ResourceType.generated.h"
 
 UENUM(BlueprintType)
-enum E_ResourceType12
+enum class EResourceType : uint8
 {
-	Coins UMETA(DisplayName = "Coins")
+	RCoins UMETA(DisplayName = "Coins")
 };

@@ -8,6 +8,7 @@
 #include "STR_ItemData.h"
 #include "STR_ItemInstance.h"
 #include "STR_Item.h"
+#include "STR_ResourceValue.h"
 
 #include "ItemsLibrary.generated.h"
 
@@ -86,4 +87,40 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Items Library|Utility|Other", WorldContext = "__WorldContext", OverrideNativeName = "CreateRequiredItemsList"))
 	static void CreateRequiredItemsList(UObject* WorldContext,
 		/*out*/ TArray<FSTR_Item>& RequiredItems, /*out*/ TMap<FName, int32>& ItemsList);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Items Library|Property", WorldContext = "__WorldContext", OverrideNativeName = "GetItemAmountWeight"))
+	static void GetItemAmountWeight(FSTR_ItemData Item, UObject* WorldContext, 
+		/*out*/ float& Weight);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Items Library|Utility|Make Items", WorldContext = "__WorldContext", OverrideNativeName = "MakeItemsDataFromItem"))
+	static void MakeItemsDataFromItem(FSTR_Item Item, UObject* WorldContext, 
+		/*out*/ TArray<FSTR_ItemData>& Items);
+	
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Items Library|Utility|Make Items", WorldContext = "__WorldContext", OverrideNativeName = "MakeItemInstance"))
+	static void MakeItemInstance(FDataTableRowHandle ItemHandle, UObject* WorldContext,
+		/*out*/ FSTR_ItemInstance& ItemInstance);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Items Library|State", WorldContext = "__WorldContext", OverrideNativeName = "ItemIsResource"))
+	static void ItemIsResource(FSTR_ItemData Item, UObject* WorldContext, 
+		/*out*/ bool& Result);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Items Library|Property", WorldContext = "__WorldContext", OverrideNativeName = "GetItemTags"))
+	static void GetItemTags(FSTR_ItemData Item, UObject* WorldContext, 
+		/*out*/ FGameplayTagContainer& ItemTags);
+	
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Items Library|Property", WorldContext = "__WorldContext", OverrideNativeName = "GetItemResources"))
+	static void GetItemResources(FSTR_ItemData Item, UObject* WorldContext,
+		/*out*/ TArray<FSTR_ResourceValue>& Resources);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Items Library|Property", WorldContext = "__WorldContext", OverrideNativeName = "GetItemCostResources"))
+	static void GetItemCostResources(FSTR_ItemData Item, UObject* WorldContext,
+		/*out*/ TArray<FSTR_ResourceValue>& ResourcesCost);
+
+	UFUNCTION(BlueprintCallable, meta = (Category = "Items Library|Utility|Calculations", WorldContext = "__WorldContext", OverrideNativeName = "MultiplyResources"))
+	static void MultiplyResources(TArray<FSTR_ResourceValue>& Resources, float Multiplier, UObject* WorldContext, 
+		/*out*/ TArray<FSTR_ResourceValue>& ResultResources);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Items Library|State",  WorldContext = "__WorldContext", OverrideNativeName = "ItemIsStackable"))
+	static void ItemIsStackable(FSTR_ItemData Item, UObject* WorldContext, 
+		/*out*/ bool& Result);
 };
