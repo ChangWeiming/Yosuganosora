@@ -116,8 +116,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Run Speed", Category = "Settings|Base", OverrideNativeName = "RunSpeed"))
 		float RunSpeed = 400.0;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Ragdoll Bone", Category = "Settings|Base", OverrideNativeName = "RagdollBone"))
-		//FName RagdollBone = "pelvis";
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Ragdoll Bone", Category = "Settings|Base", OverrideNativeName = "RagdollBone"))
+		FName RagdollBone = "pelvis";
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Destroy Character Timer", Category = "Settings|Base", OverrideNativeName = "DestroyCharacterTimer"))
 		//float DestroyCharacterTimer = 60.0;
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Fraction", Category = "Settings|Base", OverrideNativeName = "Fraction"))
@@ -134,15 +134,30 @@ public:
 
 
 public:
+
 	UFUNCTION(BlueprintCallable, Category = "State")
 		void SetHealthValues(float MaxHealthtemp, float HealthRegenerationtemp);
 
 	UFUNCTION(BlueprintCallable, Category = "State")
 		void SetEnergyValues(float MaxEnegytemp, float EnergyRegenerationtemp);
 
+	//Update character\'s state by tick.
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent,meta = (Category = "State",OverrideNativeName = "UpdateTick"))
+		void UpdateTick(float DeltaSeconds, 
+			/*out*/ bool& Success);
+	
+	//Movement mode changed actions.
+	UFUNCTION(BlueprintCallable, meta = (Category = "State",  OverrideNativeName = "MovementModeChanged"))
+		virtual void MovementModeChanged(EMovementMode PrevMovementMode, EMovementMode NewMovementMode, 
+			/*out*/ bool& Success);
+
+	//Force set max walk speed for character.
+	UFUNCTION(BlueprintCallable, meta = (Category = "State", OverrideNativeName = "OverrideWalkSpeed"))
+		virtual void OverrideWalkSpeed(bool ShouldOverrideWalkSpeed_temp, float OverridedWalkSpeed_temp, float OverridedWalkInterpSpeed_temp);
+
 	//Update walk speed depending on the movement variables.
-	//UFUNCTION(BlueprintCallable, meta = (Category = "State", OverrideNativeName = "UpdateWalkSpeed"))
-		//virtual void UpdateWalkSpeed(/*out*/ bool& Success);
+	UFUNCTION(BlueprintCallable, meta = (Category = "State", OverrideNativeName = "UpdateWalkSpeed"))
+		virtual void UpdateWalkSpeed(/*out*/ bool& Success);
 
 	//Change health value
 	UFUNCTION(BlueprintCallable, meta = (Category = "State", OverrideNativeName = "ChangeHealth"))
@@ -151,6 +166,7 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "State")
 		bool ChangeEnergy(float Value, bool Percent);
+
 
 	//Rotate state widget's face to the local player controller.
 	UFUNCTION(BlueprintCallable, meta = (Category = "State", OverrideNativeName = "UpdateStateWidgetRotation"))
@@ -166,16 +182,27 @@ public:
 
 	//Returns true if character can interact.
 	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Interactions|Base", OverrideNativeName = "IsCanInteract"))
-		virtual void IsCanInteract(/*Êä³ö*/ bool& CanInteract);
+		virtual void IsCanInteract(/*out*/ bool& CanInteract);
 
+	//Check fall distance and do damage if it is greater than a certain value
+	UFUNCTION(BlueprintCallable, meta = (Category = "Interactions|Base",OverrideNativeName = "CheckFallingDamage"))
+		virtual void CheckFallingDamage(/*out*/ bool& Success);
+
+	//Enable or disable capsule collision.
+	UFUNCTION(BlueprintCallable, meta = (Category = "Interactions|Base", OverrideNativeName = "EnableCapsuleCollision"))
+		virtual void EnableCapsuleCollision(bool Enabled);
+
+	//Enable ragdoll and disable capsule collision.
+	UFUNCTION(BlueprintCallable, meta = (Category = "Interactions|Base",OverrideNativeName = "EnableRagdoll"))
+		virtual void EnableRagdoll();
 
 	//Set character interaction state.
 	UFUNCTION(BlueprintCallable, meta = (Category = "Interactions|Base", OverrideNativeName = "SetInteractionState"))
 		virtual void SetInteractionState(EE_InteractionState Selection, bool State);
 
 	//Try to attack or continue attack.
-	UFUNCTION(BlueprintCallable, meta = (Category = "Interactions|Combat", OverrideNativeName = "TryAttack"))
-		virtual void TryAttack(/*out*/ bool& Success);
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, meta = (Category = "Interactions|Combat", OverrideNativeName = "TryAttack"))
+		void TryAttack(/*out*/ bool& Success);
 
 	//NATIVE EVENT
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
