@@ -11,6 +11,8 @@
 
 #include "Item.h"
 #include "STR_Attribute.h"
+#include "STR_CostValue.h"
+
 #include "STR_ItemInstance.generated.h"
 
 USTRUCT(BlueprintType)
@@ -52,10 +54,10 @@ public:
 	//Game control
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FGameplayTagContainer ItemTags;
-//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-//	FSTR_CostValue CostValue;
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	//FSTR_Attribute EquipmentAttributes;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FSTR_CostValue CostValue;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FSTR_Attribute EquipmentAttributes;
 	
 	//additional settings
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

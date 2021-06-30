@@ -2,6 +2,7 @@
 
 
 #include "ItemsLibrary.h"
+#include "BlueprintGameplayTagLibrary.h" 
 #include "Kismet/KismetMathLibrary.h"
 #include "GeneratedCodeHelpers.h"
 
@@ -85,7 +86,7 @@ void UItemsLibrary::MakeItem(FSTR_ItemInstance ItemInstance, int32 Amount, int32
 	Item.Sounds = ItemInstance.Sounds;
 	Item.Handles = ItemInstance.Handles;
 	Item.ItemTags = ItemInstance.ItemTags;
-//	Item.CostValue= ItemInstance.CostValue;
+	Item.CostValue= ItemInstance.CostValue;
 //	Item.EquipmentAttributes = ItemInstance.EquipmentAttributes;
 	Item.CanDecay = ItemInstance.CanDecay;
 	Item.DecayTime = ItemInstance.DecayTime;
@@ -180,7 +181,7 @@ void UItemsLibrary::RemoveFromItemAmount(FSTR_ItemData Item, int32 AmountToRemov
 	}
 	else {
 		WasRemoved = false;
-		AmountRemoved = 0;
+		AmountRemoved = AmountToRemove;
 	}
 }
 
@@ -198,4 +199,107 @@ void UItemsLibrary::CreateRequiredItemsList(UObject* WorldContext,
 	for (auto &item : RequiredItems) {
 		ItemsList.Add(item.ItemHandle.RowName, item.Amount);
 	}
+}
+
+void UItemsLibrary::GetItemAmountWeight(FSTR_ItemData Item, UObject* WorldContext,
+	/*out*/ float& Weight)
+{
+	Weight = Item.Amount * Item.Weight;
+}
+
+void UItemsLibrary::MakeItemsDataFromItem(FSTR_Item Item, UObject* WorldContext,
+	/*out*/ TArray<FSTR_ItemData>& Items) {
+	FSTR_ItemInstance itemInstance{};
+	UItemsLibrary::MakeItemInstance(Item.ItemHandle, WorldContext, 
+		itemInstance);
+
+	for (int32 i = 0; i < Item.Amount / itemInstance.MaxStack - 1; ++i) {
+		FSTR_ItemData itemResult{};
+		UItemsLibrary::MakeItem(itemInstance, Item.Amount, Item.Charges, Item.Durability, Item.Decay, WorldContext, 
+			itemResult);
+		Items.Add(itemResult);
+	}
+
+	if (Item.Amount % itemInstance.MaxStack != 0) {
+		FSTR_ItemData itemResult{};
+		UItemsLibrary::MakeItem(itemInstance, Item.Amount % itemInstance.MaxStack, Item.Charges, Item.Durability, Item.Decay, WorldContext,
+			itemResult);
+		Items.Add(itemResult);
+	}
+}
+
+
+void UItemsLibrary::MakeItemInstance(FDataTableRowHandle ItemHandle, UObject* WorldContext, 
+	/*out*/ FSTR_ItemInstance& ItemInstance)
+{
+	FSTR_ItemInstance OutRow{};
+	bool ok = false;
+	ok = FCustomThunkTemplates::GetDataTableRowFromName(const_cast<UDataTable*>(ItemHandle.DataTable), ItemHandle.RowName,
+		OutRow);
+	if (ok)
+	{
+		ItemInstance = OutRow;
+	}
+}
+
+void UItemsLibrary::GetItemTags(FSTR_ItemData Item, UObject* WorldContext,
+	/*out*/ FGameplayTagContainer& ItemTags)
+{
+
+}
+
+void UItemsLibrary::ItemIsResource(FSTR_ItemData Item, UObject* WorldContext,
+	/*out*/ bool& Result)
+{
+	FGameplayTagContainer tagContainer{};
+	UItemsLibrary::GetItemTags(Item, WorldContext,
+		/*out*/ tagContainer);
+
+	const UScriptStruct* nullStruct = FGameplayTag::StaticStruct();
+	uint8* structSize = (uint8*)FMemory_Alloca(nullStruct->GetStructureSize());
+	
+	nullStruct->InitializeStruct(structSize);
+	FGameplayTag& tag = *reinterpret_cast<FGameplayTag*>(structSize);
+	
+	auto& name = (*(AccessPrivateProperty<FName >(&(tag), FGameplayTag::__PPO__TagName())));
+	name = FName(TEXT("EasyRPG.Items.Resource"));
+
+	Result = tagContainer.HasTag(tag);
+}
+
+void UItemsLibrary::GetItemResources(FSTR_ItemData Item, UObject* WorldContext,
+	/*out*/ TArray<FSTR_ResourceValue>& Resources)
+{
+	TArray<FSTR_ResourceValue> ResourcesCost{};
+	int32 amount{};
+	float floatConverted{};
+	UItemsLibrary::GetItemCostResources(Item, WorldContext, ResourcesCost);
+	UItemsLibrary::GetItemAmount(Item, WorldContext, amount);
+	floatConverted = UKismetMathLibrary::Conv_IntToFloat(amount);
+	
+	UItemsLibrary::MultiplyResources( ResourcesCost, floatConverted, WorldContext,
+		/*out*/ Resources);
+}
+
+void UItemsLibrary::GetItemCostResources(FSTR_ItemData Item, UObject* WorldContext,
+	/*out*/ TArray<FSTR_ResourceValue>& ResourcesCost)
+{
+	ResourcesCost = Item.CostValue.CostResources;
+}
+
+void UItemsLibrary::MultiplyResources(TArray<FSTR_ResourceValue>& Resources, float Multiplier, UObject* WorldContext,
+	/*out*/ TArray<FSTR_ResourceValue>& ResultResources)
+{
+	for (auto &r : Resources) {
+		FSTR_ResourceValue tmp{};
+		tmp.ResourceType = r.ResourceType;
+		tmp.Value = r.Value * Multiplier;
+		ResultResources.Add(tmp);
+	}
+}
+
+void UItemsLibrary::ItemIsStackable(FSTR_ItemData Item, UObject* WorldContext,
+	/*out*/ bool& Result)
+{
+	Result = Item.MaxStack > 1;
 }

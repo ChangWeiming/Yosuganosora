@@ -9,6 +9,16 @@
 
 #include "ContainerComponent.generated.h"
 
+UDELEGATE(meta = (OverrideNativeName = "OnOpened__DelegateSignature"))
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOpened);
+UDELEGATE(meta = (OverrideNativeName = "OnClosed__DelegateSignature"))
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnClosed);
+UDELEGATE(meta = (OverrideNativeName = "OnSlotItemChanged__DelegateSignature"))
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnSlotItemChanged, int32, Slot, FSTR_ItemData, Item);
+UDELEGATE(meta = (OverrideNativeName = "OnWeightChanged__DelegateSignature"))
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWeightChanged, float, Weight);
+UDELEGATE(meta = (OverrideNativeName = "OnItemAdded__DelegateSignature"))
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnItemAdded, FSTR_ItemData, Item);
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -27,39 +37,38 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-public:
-	//UDELEGATE(meta = (OverrideNativeName = "OnOpened__DelegateSignature"))
-	//DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOpened__pf__BP_ContainerComponent_C__pf__MulticastDelegate);
-	//UDELEGATE(meta = (OverrideNativeName = "OnClosed__DelegateSignature"))
-	//	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnClosed__pf__BP_ContainerComponent_C__pf__MulticastDelegate);
-	//UDELEGATE(meta = (OverrideNativeName = "OnSlotItemChanged__DelegateSignature"))
-	//	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnSlotItemChanged__pf__BP_ContainerComponent_C__pf__MulticastDelegate, int32, bpp__Slot__pf, FDEPRECATED_STR_ItemData__pf2029040651, bpp__Item__pf);
-	//UDELEGATE(meta = (OverrideNativeName = "OnWeightChanged__DelegateSignature"))
-	//	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWeightChanged__pf__BP_ContainerComponent_C__pf__MulticastDelegate, float, bpp__Weight__pf);
-	//UDELEGATE(meta = (OverrideNativeName = "OnItemAdded__DelegateSignature"))
-	//	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnItemAdded__pf__BP_ContainerComponent_C__pf__MulticastDelegate, FDEPRECATED_STR_ItemData__pf2029040651, bpp__Item__pf);
-	
+public:	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Slots", Category = "Settings", OverrideNativeName = "Slots"))
 	int32 Slots;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (DisplayName = "Items", Category = "State", OverrideNativeName = "Items"))
 	TArray<FSTR_ItemData> Items;
-	//UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Replicated, meta = (DisplayName = "Resources", Category = "State", OverrideNativeName = "Resources"))
-	//	TArray<FSTR_Resource> bpv__Resources__pf;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (DisplayName = "Resources", Category = "State", OverrideNativeName = "Resources"))
+	TArray<FSTR_ResourceValue> Resources;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (DisplayName = "Active Players", Category = "State", OverrideNativeName = "ActivePlayers"))
 	TArray<APlayerController*> ActivePlayers;
-	//UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, BlueprintAssignable, BlueprintCallable, meta = (DisplayName = "On Opened", Category = "Bindings", OverrideNativeName = "OnOpened"))
-	//	FOnOpened__pf__BP_ContainerComponent_C__pf__MulticastDelegate bpv__OnOpened__pf;
-	//UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, BlueprintAssignable, BlueprintCallable, meta = (DisplayName = "On Closed", Category = "Bindings", OverrideNativeName = "OnClosed"))
-	//	FOnClosed__pf__BP_ContainerComponent_C__pf__MulticastDelegate bpv__OnClosed__pf;
+	
+	//multicast delegates
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, BlueprintAssignable, BlueprintCallable, meta = (DisplayName = "On Opened", Category = "Bindings", OverrideNativeName = "OnOpened"))
+	FOnOpened OnOpened;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, BlueprintAssignable, BlueprintCallable, meta = (DisplayName = "On Closed", Category = "Bindings", OverrideNativeName = "OnClosed"))
+	FOnClosed OnClosed;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, BlueprintAssignable, BlueprintCallable, meta = (DisplayName = "On Slot Item Changed", Category = "Bindings", OverrideNativeName = "OnSlotItemChanged"))
+	FOnSlotItemChanged OnSlotItemChanged;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, BlueprintAssignable, BlueprintCallable, meta = (DisplayName = "On Weight Changed", Category = "Bindings", OverrideNativeName = "OnWeightChanged"))
+	FOnWeightChanged OnWeightChanged;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, BlueprintAssignable, BlueprintCallable, meta = (DisplayName = "On Item Added", Category = "Bindings", OverrideNativeName = "OnItemAdded"))
+	FOnItemAdded OnItemAdded;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (DisplayName = "Drop Primitive Component", Category = "State", OverrideNativeName = "DropPrimitiveComponent"))
 	UPrimitiveComponent* DropPrimitiveComponent;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (DisplayName = "Drop Location", Category = "State", OverrideNativeName = "DropLocation"))
 	FVector DropLocation;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (DisplayName = "Drop Location Overrided", Category = "State", OverrideNativeName = "DropLocationOverrided"))
 	bool DropLocationOverrided;
-	//UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, BlueprintAssignable, BlueprintCallable, meta = (DisplayName = "On Slot Item Changed", Category = "Bindings", OverrideNativeName = "OnSlotItemChanged"))
-	//	FOnSlotItemChanged__pf__BP_ContainerComponent_C__pf__MulticastDelegate bpv__OnSlotItemChanged__pf;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Decay Factor", Category = "Settings", OverrideNativeName = "DecayFactor"))
 	float DecayFactor;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Decay Tick Time", Category = "Settings", OverrideNativeName = "DecayTickTime"))
@@ -68,17 +77,15 @@ public:
 	TArray<int32> DecaySlots;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (DisplayName = "Weight", Category = "State", OverrideNativeName = "Weight"))
 	float Weight;
-	//UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, BlueprintAssignable, BlueprintCallable, meta = (DisplayName = "On Weight Changed", Category = "Bindings", OverrideNativeName = "OnWeightChanged"))
-	//	FOnWeightChanged__pf__BP_ContainerComponent_C__pf__MulticastDelegate bpv__OnWeightChanged__pf;
-	//UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, BlueprintAssignable, BlueprintCallable, meta = (DisplayName = "On Item Added", Category = "Bindings", OverrideNativeName = "OnItemAdded"))
-	//	FOnItemAdded__pf__BP_ContainerComponent_C__pf__MulticastDelegate bpv__OnItemAdded__pf;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (DisplayName = "Save ID", Category = "State", OverrideNativeName = "SaveID"))
 	int32 SaveID;
+
 	//UPROPERTY(Transient, DuplicateTransient, meta = (OverrideNativeName = "K2Node_CustomEvent_Player_1"))
 	//APlayerController* b0l__K2Node_CustomEvent_Player_1__pf;
 	//UPROPERTY(Transient, DuplicateTransient, meta = (OverrideNativeName = "K2Node_CustomEvent_Player"))
 	//APlayerController* b0l__K2Node_CustomEvent_Player__pf;
 
+	//function declaration
 	UFUNCTION(BlueprintCallable, meta = (Category = "Container|Items", OverrideNativeName = "TryAddItemsOrDrop"))
 	virtual void TryAddItemsOrDrop(/*out*/ TArray<FSTR_Item>& ResultItem);
 	
@@ -92,4 +99,21 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Container|Items", Tooltip = "Returns map list of items.", OverrideNativeName = "GetItemList"))
 	virtual void GetItemList(/*out*/ TMap<FName, int32>& ItemList);
 
+	UFUNCTION(BlueprintCallable, meta = (Category = "Container|Items", OverrideNativeName = "CalculateWeight"))
+	virtual void CalculateWeight();
+
+	UFUNCTION(BlueprintCallable, meta = (Category = "Container|Items", OverrideNativeName = "SetItem"))
+	virtual void SetItem(int32 Slot, FSTR_ItemData Item);
+
+	UFUNCTION(BlueprintCallable, meta = (Category = "Container|Resources", Tooltip = "Adds resources to the container.", OverrideNativeName = "AddResources"))
+	virtual void AddResources(/*out*/ TArray<FSTR_ResourceValue>& Resource);
+
+	UFUNCTION(BlueprintCallable, meta = (Category = "Container|Resources", Tooltip = "Adds resource to the container.", OverrideNativeName = "AddResource"))
+	virtual void AddResource(FSTR_ResourceValue const& Resource);
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, meta = (Category = "InterfaceBP", OverrideNativeName = "UpdateContainerSlotBPI"))
+	void UpdateContainerSlotBPI(APlayerController* target, UContainerComponent* container, int32 slot, FSTR_ItemData item);
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, meta = (Category = "InterfaceBP", OverrideNativeName = "UpdateContainerResourcesBPI"))
+	void UpdateContainerResourcesBPI(APlayerController* target, UContainerComponent* container, TArray<FSTR_ResourceValue>& updatedResources);
 };
