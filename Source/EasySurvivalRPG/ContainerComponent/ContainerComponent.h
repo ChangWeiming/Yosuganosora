@@ -86,9 +86,6 @@ public:
 	//APlayerController* b0l__K2Node_CustomEvent_Player__pf;
 
 	//function declaration
-	UFUNCTION(BlueprintCallable, meta = (Category = "Container|Items", OverrideNativeName = "TryAddItemsOrDrop"))
-	virtual void TryAddItemsOrDrop(/*out*/ TArray<FSTR_Item>& ResultItem);
-	
 	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Container|Items", OverrideNativeName = "CheckRequiredItems"))
 	virtual void CheckRequiredItems(/*out*/ TArray<FSTR_Item>& RequiredItems, 
 		/*out*/ bool& Result);
@@ -111,9 +108,49 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (Category = "Container|Resources", Tooltip = "Adds resource to the container.", OverrideNativeName = "AddResource"))
 	virtual void AddResource(FSTR_ResourceValue const& Resource);
 
+	//Adds amount to target slot.
+	UFUNCTION(BlueprintCallable, meta = (Category = "Container|Items", OverrideNativeName = "AddAmountToSlot"))
+	virtual void AddAmountToSlot(int32 Slot, int32 AmountToAdd,
+		/*out*/ int32& AmountRemaining);
+
+	//Get item data from slot.
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Container|Items", OverrideNativeName = "GetItem"))
+	virtual void GetItem(int32 Slot, 
+		/*out*/ FSTR_ItemData& Item);
+
+	//Adds amount of item data to the container. Returns remaining amount
+	UFUNCTION(BlueprintCallable, meta = (Category = "Container|Items", OverrideNativeName = "AddItemToStacks"))
+	virtual void AddItemToStacks(FSTR_ItemData Item, 
+		/*out*/ int32& AmountRemaining);
+
+	//Try add items or drop in default drop location
+	UFUNCTION(BlueprintCallable, meta = (Category = "Container|Items", OverrideNativeName = "TryAddItemsOrDrop"))
+	virtual void TryAddItemsOrDrop(TArray<FSTR_Item>& AddedItems);
+
+	//Try add item data to container. Returns true if success. Else return remaining item
+	UFUNCTION(BlueprintCallable, meta = (Category = "Container|Items", OverrideNativeName = "TryAddItem"))
+	virtual void TryAddItem(FSTR_ItemData Item, 
+		/*out*/ bool& Success, /*out*/ FSTR_ItemData& RemainingItem);
+
+	// Returns true if container has an empty slot.Returns first empty slot.
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Container|Items", OverrideNativeName = "GetEmptySlot"))
+	virtual void GetEmptySlot(bool& Success, int32& Slot);
+
+	// Spawn item in default drop location.
+	UFUNCTION(BlueprintCallable, meta = (Category = "Container|Items", OverrideNativeName = "SpawnDropItem"))
+	virtual void SpawnDropItem(FSTR_ItemData ItemData);
+
+	//Returns drop location with default offset of owning actor. If drop location overridded returns it. If drop component is valid returns its location.
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Container|Items", OverrideNativeName = "GetDropLocation"))
+	virtual void GetDropLocation(FVector& TargetDropLocation);
+
+	//Native event
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, meta = (Category = "InterfaceBP", OverrideNativeName = "UpdateContainerSlotBPI"))
 	void UpdateContainerSlotBPI(APlayerController* target, UContainerComponent* container, int32 slot, FSTR_ItemData item);
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, meta = (Category = "InterfaceBP", OverrideNativeName = "UpdateContainerResourcesBPI"))
 	void UpdateContainerResourcesBPI(APlayerController* target, UContainerComponent* container, TArray<FSTR_ResourceValue>& updatedResources);
+	
+
+
 };

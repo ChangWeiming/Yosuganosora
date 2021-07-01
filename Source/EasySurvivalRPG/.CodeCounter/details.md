@@ -1,10 +1,10 @@
 # Details
 
-Date : 2021-06-30 09:28:51
+Date : 2021-06-30 17:17:08
 
 Directory : ./
 
-Total : 40 files,  2315 codes, 430 comments, 743 blanks, all 3488 lines, 15.66% comment rate
+Total : 42 files,  2593 codes, 403 comments, 808 blanks, all 3804 lines, 13.45% comment rate
 
 [summary](results.md)
 
@@ -23,8 +23,8 @@ Total : 40 files,  2315 codes, 430 comments, 743 blanks, all 3488 lines, 15.66% 
 | [Ability\S_Ability_Shoot_Trace.h](../Ability\S_Ability_Shoot_Trace.h) | C++ | 56 | 6 | 15 | 77 | 9.68% |
 | [Character\Character_Base.cpp](../Character\Character_Base.cpp) | C++ | 322 | 118 | 40 | 480 | 26.82% |
 | [Character\Character_Base.h](../Character\Character_Base.h) | C++ | 115 | 39 | 30 | 184 | 25.32% |
-| [ContainerComponent\ContainerComponent.cpp](../ContainerComponent\ContainerComponent.cpp) | C++ | 47 | 8 | 20 | 75 | 14.55% |
-| [ContainerComponent\ContainerComponent.h](../ContainerComponent\ContainerComponent.h) | C++ | 49 | 30 | 17 | 96 | 37.97% |
+| [ContainerComponent\ContainerComponent.cpp](../ContainerComponent\ContainerComponent.cpp) | C++ | 133 | 8 | 37 | 178 | 5.67% |
+| [ContainerComponent\ContainerComponent.h](../ContainerComponent\ContainerComponent.h) | C++ | 83 | 10 | 27 | 120 | 10.75% |
 | [EasySurvivalRPG.Build.cs](../EasySurvivalRPG.Build.cs) | C# | 10 | 6 | 8 | 24 | 37.50% |
 | [EasySurvivalRPG.cpp](../EasySurvivalRPG.cpp) | C++ | 3 | 1 | 3 | 7 | 25.00% |
 | [EasySurvivalRPG.h](../EasySurvivalRPG.h) | C++ | 2 | 1 | 4 | 7 | 33.33% |
@@ -35,12 +35,14 @@ Total : 40 files,  2315 codes, 430 comments, 743 blanks, all 3488 lines, 15.66% 
 | [Item\E_ResourceType.h](../Item\E_ResourceType.h) | C++ | 9 | 0 | 3 | 12 | 0.00% |
 | [Item\Item.cpp](../Item\Item.cpp) | C++ | 103 | 7 | 21 | 131 | 6.36% |
 | [Item\Item.h](../Item\Item.h) | C++ | 55 | 4 | 16 | 75 | 6.78% |
-| [Item\ItemsLibrary.cpp](../Item\ItemsLibrary.cpp) | C++ | 168 | 5 | 28 | 201 | 2.89% |
-| [Item\ItemsLibrary.h](../Item\ItemsLibrary.h) | C++ | 57 | 14 | 19 | 90 | 19.72% |
+| [Item\ItemsLibrary.cpp](../Item\ItemsLibrary.cpp) | C++ | 255 | 4 | 46 | 305 | 1.54% |
+| [Item\ItemsLibrary.h](../Item\ItemsLibrary.h) | C++ | 85 | 14 | 28 | 127 | 14.14% |
 | [Item\STR_Attribute.h](../Item\STR_Attribute.h) | C++ | 15 | 0 | 4 | 19 | 0.00% |
+| [Item\STR_CostValue.h](../Item\STR_CostValue.h) | C++ | 19 | 0 | 5 | 24 | 0.00% |
 | [Item\STR_Item.h](../Item\STR_Item.h) | C++ | 21 | 0 | 4 | 25 | 0.00% |
-| [Item\STR_ItemData.h](../Item\STR_ItemData.h) | C++ | 58 | 8 | 9 | 75 | 12.12% |
-| [Item\STR_ItemInstance.h](../Item\STR_ItemInstance.h) | C++ | 49 | 11 | 13 | 73 | 18.33% |
+| [Item\STR_ItemData.h](../Item\STR_ItemData.h) | C++ | 62 | 6 | 10 | 78 | 8.82% |
+| [Item\STR_ItemInstance.h](../Item\STR_ItemInstance.h) | C++ | 54 | 7 | 14 | 75 | 11.48% |
+| [Item\STR_ResourceValue.h](../Item\STR_ResourceValue.h) | C++ | 15 | 0 | 4 | 19 | 0.00% |
 | [Map_Render\My_MapMark.cpp](../Map_Render\My_MapMark.cpp) | C++ | 155 | 10 | 62 | 227 | 6.06% |
 | [Map_Render\My_MapMark.h](../Map_Render\My_MapMark.h) | C++ | 80 | 4 | 39 | 123 | 4.76% |
 | [Map_Render\My_UI_WorldMark.cpp](../Map_Render\My_UI_WorldMark.cpp) | C++ | 79 | 15 | 29 | 123 | 15.96% |

@@ -116,6 +116,15 @@ public:
 	static void GetItemCostResources(FSTR_ItemData Item, UObject* WorldContext,
 		/*out*/ TArray<FSTR_ResourceValue>& ResourcesCost);
 
+	//Add amount to item stack.
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Items Library|Utility|Calculations", WorldContext = "__WorldContext", OverrideNativeName = "GetItemMaxStack"))
+	static void GetItemMaxStack(FSTR_ItemData Item, UObject* WorldContext,
+		/*out*/ int32& MaxStack);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Items Library|Utility|Calculations", Tooltip = "Add amount to item stack.", WorldContext = "__WorldContext", OverrideNativeName = "AddToItemAmount"))
+	static void AddToItemAmount(FSTR_ItemData Item, int32 AmountToAdd, UObject* WorldContext, 
+		/*out*/ FSTR_ItemData& ResultItem);
+
 	UFUNCTION(BlueprintCallable, meta = (Category = "Items Library|Utility|Calculations", WorldContext = "__WorldContext", OverrideNativeName = "MultiplyResources"))
 	static void MultiplyResources(TArray<FSTR_ResourceValue>& Resources, float Multiplier, UObject* WorldContext, 
 		/*out*/ TArray<FSTR_ResourceValue>& ResultResources);
@@ -123,4 +132,7 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (Category = "Items Library|State",  WorldContext = "__WorldContext", OverrideNativeName = "ItemIsStackable"))
 	static void ItemIsStackable(FSTR_ItemData Item, UObject* WorldContext, 
 		/*out*/ bool& Result);
+
+
 };
+

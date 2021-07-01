@@ -303,3 +303,24 @@ void UItemsLibrary::ItemIsStackable(FSTR_ItemData Item, UObject* WorldContext,
 {
 	Result = Item.MaxStack > 1;
 }
+
+void UItemsLibrary::GetItemMaxStack(FSTR_ItemData Item, UObject* WorldContext,
+	/*out*/ int32& MaxStack)
+{
+	MaxStack = Item.MaxStack;
+}
+
+void UItemsLibrary::AddToItemAmount(FSTR_ItemData Item, int32 AmountToAdd, UObject* WorldContext,
+	/*out*/ FSTR_ItemData& ResultItem)
+{
+	int32 nowAmount{};
+	int32 maxStack{};
+	int32 addedSum{};
+	UItemsLibrary::GetItemAmount(Item, WorldContext, nowAmount);
+	UItemsLibrary::GetItemMaxStack(Item, WorldContext, maxStack);
+	addedSum = UKismetMathLibrary::Add_IntInt(nowAmount, AmountToAdd);
+	addedSum = UKismetMathLibrary::Clamp(addedSum, 0, maxStack);
+
+	Item.Amount = addedSum;
+	ResultItem = Item;
+}
