@@ -6,6 +6,8 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Camera/PlayerCameraManager.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "GeneratedCodeHelpers.h"
 #include<algorithm>
@@ -58,6 +60,96 @@ void ACharacter_Base::SetEnergyValues(float MaxEnegytemp, float EnergyRegenerati
 		Energy = MaxEnergy;
 }
 
+void ACharacter_Base::UpdateTick_Implementation(float DeltaSeconds, bool & Success)
+{
+	UpdateStateWidgetRotation();
+	float temp_float{};
+	bool temp_bool{};
+	bool ChangeHealth_Return{};
+	bool ChangeEnergy_Return{};
+	if (IsAlive)
+	{
+		//Change Health
+		temp_float = UKismetMathLibrary::Multiply_FloatFloat(DeltaSeconds, HealthRegeneration);
+		ChangeHealth(temp_float, false, ((AController*)nullptr), ChangeHealth_Return);
+
+		//Change Energy
+		temp_float = UKismetMathLibrary::Multiply_FloatFloat(DeltaSeconds, EnergyRegeneration);
+		ChangeEnergy_Return = ChangeEnergy(temp_float, false);
+
+		temp_bool = UKismetMathLibrary::BooleanOR(IsAttacking, ShouldBlocking);
+		temp_bool = UKismetMathLibrary::BooleanOR(temp_bool, ShouldAiming);
+		if (temp_bool)
+		{
+			RunSpeed = 200.0;
+		}
+		else
+		{
+			if (isDashing)
+			{
+				AddMovementInput(AActor::GetActorForwardVector(), 1.0, false);
+			}
+			else
+			{
+				RunSpeed = 400.0;
+			}
+		}
+		Success = true;
+	}
+}
+
+void ACharacter_Base::MovementModeChanged(EMovementMode PrevMovementMode, EMovementMode NewMovementMode, bool & Success)
+{
+	bool CheckFallingDamage_Return{};
+	if (NewMovementMode == EMovementMode::MOVE_Falling)
+	{
+		StartFallingLocation = AActor::GetActorLocation();
+		StartFallingTime = UKismetMathLibrary::Now();
+	}
+	else
+	{
+		if ((PrevMovementMode == EMovementMode::MOVE_Falling) && (NewMovementMode == EMovementMode::MOVE_Walking))
+		{
+			CheckFallingDamage(CheckFallingDamage_Return);
+		}
+	}
+	Success = true;
+}
+
+void ACharacter_Base::OverrideWalkSpeed(bool ShouldOverrideWalkSpeed_temp, float OverridedWalkSpeed_temp, float OverridedWalkInterpSpeed_temp)
+{
+	ShouldOverrideWalkSpeed = ShouldOverrideWalkSpeed_temp;
+	if (ShouldOverrideWalkSpeed)
+		OverridedWalkSpeed = OverridedWalkSpeed_temp;
+	else
+		OverridedWalkSpeed = 0.0;
+	OverridedWalkInterpSpeed = OverridedWalkInterpSpeed_temp;
+}
+
+void ACharacter_Base::UpdateWalkSpeed(bool & Success)
+{
+	float ReturnValue{};
+	float DeltaTime{};
+	float Current{};
+	if (ShouldRun)
+		ReturnValue = RunSpeed;
+	else
+		ReturnValue = WalkSpeed;
+	if (ShouldOverrideWalkSpeed)
+		ReturnValue = OverridedWalkSpeed;
+	TargetSpeed = ReturnValue;
+	if (ShouldOverrideWalkSpeed)
+		ReturnValue = OverridedWalkInterpSpeed;
+	else
+		ReturnValue = 5.0;
+	DeltaTime = UGameplayStatics::GetWorldDeltaSeconds(this);
+	Current = (this->GetCharacterMovement())->MaxWalkSpeed;
+	ReturnValue = UKismetMathLibrary::FInterpTo(Current, TargetSpeed, DeltaTime, ReturnValue);
+	(this->GetCharacterMovement())->MaxWalkSpeed = ReturnValue;
+	Success = true;
+
+}
+
 
 
 void ACharacter_Base::ChangeHealth(float Value, bool Percent, AController * InstigatedBy, bool & Success)
@@ -99,6 +191,8 @@ bool ACharacter_Base::ChangeEnergy(float Value, bool Percent)
 	}
 	return true;
 }
+
+
 
 void ACharacter_Base::UpdateStateWidgetRotation()
 {
@@ -189,6 +283,83 @@ void ACharacter_Base::IsCanInteract(bool & CanInteract)
 	CanInteract = UKismetMathLibrary::BooleanAND(CanInteract, UpperBody);
 	CanInteract = UKismetMathLibrary::BooleanAND(CanInteract, isDashing);
 }
+void ACharacter_Base::CheckFallingDamage(bool & Success)
+{
+	FDateTime bpfv__CallFunc_Now_ReturnValue__pf{};
+	FTimespan bpfv__CallFunc_Subtract_DateTimeDateTime_ReturnValue__pf{};
+	FVector bpfv__CallFunc_K2_GetActorLocation_ReturnValue__pf(EForceInit::ForceInit);
+	float bpfv__CallFunc_GetTotalMilliseconds_ReturnValue__pf{};
+	FVector bpfv__CallFunc_Subtract_VectorVector_ReturnValue__pf(EForceInit::ForceInit);
+	bool bpfv__CallFunc_GreaterEqual_FloatFloat_ReturnValue__pf{};
+	float bpfv__CallFunc_BreakVector_X__pf{};
+	float bpfv__CallFunc_BreakVector_Y__pf{};
+	float bpfv__CallFunc_BreakVector_Z__pf{};
+	float bpfv__CallFunc_MapRangeClamped_ReturnValue__pf{};
+	bool bpfv__CallFunc_GreaterEqual_FloatFloat_ReturnValue_1__pf{};
+	float bpfv__CallFunc_Multiply_FloatFloat_ReturnValue__pf{};
+	bool bpfv__CallFunc_BooleanAND_ReturnValue__pf{};
+	bool bpfv__CallFunc_ChangeHealth_Success__pf{};
+	int32 __CurrentState = 4;
+
+	FDateTime Now_Value{};
+	FTimespan Subtract_FallingTime{};
+	float TotalMilliseconds{};
+	FVector ActorLocation_Value{};
+	FVector Subtract_FallingLocation{};
+	float Subtract_FallingLocation_X{};
+	float Subtract_FallingLocation_Y{};
+	float Subtract_FallingLocation_Z{};
+	bool FallingLocation_judge{};
+	bool FallingTime_judge{};
+	bool Falling_judge{};
+	float DamageValue{};
+	bool ChangeHealth_Success{};
+
+	//Falling time judge
+	Now_Value = UKismetMathLibrary::Now();
+	Subtract_FallingTime = UKismetMathLibrary::Subtract_DateTimeDateTime(Now_Value, StartFallingTime);
+	TotalMilliseconds = UKismetMathLibrary::GetTotalMilliseconds(Subtract_FallingTime);
+	FallingTime_judge = UKismetMathLibrary::GreaterEqual_FloatFloat(TotalMilliseconds, 1200.000000);
+
+	//Falling location judge
+	ActorLocation_Value = AActor::GetActorLocation();
+	Subtract_FallingLocation = UKismetMathLibrary::Subtract_VectorVector(StartFallingLocation, ActorLocation_Value);
+	UKismetMathLibrary::BreakVector(Subtract_FallingLocation, Subtract_FallingLocation_X, Subtract_FallingLocation_Y, Subtract_FallingLocation_Z);
+	FallingLocation_judge = UKismetMathLibrary::GreaterEqual_FloatFloat(Subtract_FallingLocation_Z, 300.0);
+	
+	//Falling judge and take damage
+	Falling_judge = FallingTime_judge && FallingLocation_judge;
+	if (Falling_judge)
+	{
+		DamageValue=UKismetMathLibrary::MapRangeClamped(Subtract_FallingLocation_Z, 300.000000, 1000.000000, 0.250000, 1.000000);
+	}
+	ChangeHealth(-1.0*DamageValue, true, ((AController*)nullptr), ChangeHealth_Success);
+	
+}
+void ACharacter_Base::EnableCapsuleCollision(bool Enabled)
+{
+	(this->GetCapsuleComponent())->SetEnableGravity(Enabled);
+	if (Enabled)
+	{
+		(this->GetCapsuleComponent())->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	}
+	else
+	{
+		(this->GetCapsuleComponent())->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
+}
+
+void ACharacter_Base::EnableRagdoll()
+{
+	(this->GetCharacterMovement())->SetMovementMode(EMovementMode::MOVE_None, 0);
+	EnableCapsuleCollision(false);
+	(this->GetMesh())->SetCollisionObjectType(ECollisionChannel::ECC_PhysicsBody);
+	(this->GetMesh())->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Block);
+	(this->GetMesh())->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Block);
+	(this->GetMesh())->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	(this->GetMesh())->SetAllBodiesBelowSimulatePhysics(RagdollBone, true, true);
+}
+
 /*
 void ACharacter_Base::Death(AController * KillerController, bool & Success)
 {
@@ -452,7 +623,7 @@ void ACharacter_Base::SetInteractionState(EE_InteractionState Selection, bool St
 	} while (CurrentState != -1);
 }
 
-void ACharacter_Base::TryAttack(bool & Success)
+void ACharacter_Base::TryAttack_Implementation(bool & Success)
 {
 	bool CanInteract{};
 	if (IsAttacking)
