@@ -12,6 +12,7 @@
 #include "Item.h"
 #include "STR_Attribute.h"
 #include "STR_CostValue.h"
+#include "../Ability/Ability_Base.h"
 
 #include "STR_ItemInstance.generated.h"
 
@@ -68,7 +69,7 @@ public:
 	FDataTableRowHandle DecayItem;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Weight;
-//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-//	AAbilityBase UseAbilityClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	AAbility_Base* UseAbilityClass;
 
 };

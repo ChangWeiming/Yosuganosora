@@ -92,7 +92,7 @@ void UItemsLibrary::MakeItem(FSTR_ItemInstance ItemInstance, int32 Amount, int32
 	Item.DecayTime = ItemInstance.DecayTime;
 	Item.DecayItem = ItemInstance.DecayItem;
 	Item.Weight = ItemInstance.Weight;
-//	Item.UseAbilityClass = ItemInstance.UseAbility;
+	Item.UseAbilityClass = ItemInstance.UseAbilityClass;
 }
 void UItemsLibrary::MakeItemAmount(FSTR_ItemInstance const& ItemInstance_const, int32 Amount, UObject* WorldContext, 
 	/*out*/ int32& resAmount)

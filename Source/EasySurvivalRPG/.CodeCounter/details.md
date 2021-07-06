@@ -1,10 +1,10 @@
 # Details
 
-Date : 2021-07-01 15:39:38
+Date : 2021-07-06 11:35:49
 
 Directory : ./
 
-Total : 42 files,  2986 codes, 429 comments, 876 blanks, all 4291 lines, 12.56% comment rate
+Total : 48 files,  3616 codes, 714 comments, 971 blanks, all 5301 lines, 16.49% comment rate
 
 [summary](results.md)
 
@@ -17,12 +17,18 @@ Total : 42 files,  2986 codes, 429 comments, 876 blanks, all 4291 lines, 12.56% 
 | [AI\S_AIController_Base.h](../AI\S_AIController_Base.h) | C++ | 22 | 4 | 7 | 33 | 15.38% |
 | [AI\S_AI_Decorator_InRange.cpp](../AI\S_AI_Decorator_InRange.cpp) | C++ | 37 | 7 | 10 | 54 | 15.91% |
 | [AI\S_AI_Decorator_InRange.h](../AI\S_AI_Decorator_InRange.h) | C++ | 20 | 4 | 8 | 32 | 16.67% |
+| [Ability\Ability_Base.cpp](../Ability\Ability_Base.cpp) | C++ | 13 | 5 | 10 | 28 | 27.78% |
+| [Ability\Ability_Base.h](../Ability\Ability_Base.h) | C++ | 17 | 4 | 7 | 28 | 19.05% |
 | [Ability\S_Ability_Base.cpp](../Ability\S_Ability_Base.cpp) | C++ | 33 | 7 | 13 | 53 | 17.50% |
 | [Ability\S_Ability_Base.h](../Ability\S_Ability_Base.h) | C++ | 23 | 4 | 10 | 37 | 14.81% |
 | [Ability\S_Ability_Shoot_Trace.cpp](../Ability\S_Ability_Shoot_Trace.cpp) | C++ | 142 | 7 | 76 | 225 | 4.70% |
 | [Ability\S_Ability_Shoot_Trace.h](../Ability\S_Ability_Shoot_Trace.h) | C++ | 56 | 6 | 15 | 77 | 9.68% |
 | [Character\Character_Base.cpp](../Character\Character_Base.cpp) | C++ | 472 | 123 | 56 | 651 | 20.67% |
 | [Character\Character_Base.h](../Character\Character_Base.h) | C++ | 133 | 41 | 37 | 211 | 23.56% |
+| [Character\Character_BaseNative.cpp](../Character\Character_BaseNative.cpp) | C++ | 19 | 6 | 12 | 37 | 24.00% |
+| [Character\Character_BaseNative.h](../Character\Character_BaseNative.h) | C++ | 316 | 55 | 35 | 406 | 14.82% |
+| [Character\Character_Player.cpp](../Character\Character_Player.cpp) | C++ | 64 | 64 | 17 | 145 | 50.00% |
+| [Character\Character_Player.h](../Character\Character_Player.h) | C++ | 194 | 156 | 14 | 364 | 44.57% |
 | [ContainerComponent\ContainerComponent.cpp](../ContainerComponent\ContainerComponent.cpp) | C++ | 316 | 17 | 64 | 397 | 5.11% |
 | [ContainerComponent\ContainerComponent.h](../ContainerComponent\ContainerComponent.h) | C++ | 101 | 19 | 37 | 157 | 15.83% |
 | [EasySurvivalRPG.Build.cs](../EasySurvivalRPG.Build.cs) | C# | 10 | 6 | 8 | 24 | 37.50% |
@@ -35,13 +41,13 @@ Total : 42 files,  2986 codes, 429 comments, 876 blanks, all 4291 lines, 12.56% 
 | [Item\E_ResourceType.h](../Item\E_ResourceType.h) | C++ | 9 | 0 | 3 | 12 | 0.00% |
 | [Item\Item.cpp](../Item\Item.cpp) | C++ | 103 | 7 | 21 | 131 | 6.36% |
 | [Item\Item.h](../Item\Item.h) | C++ | 55 | 4 | 16 | 75 | 6.78% |
-| [Item\ItemsLibrary.cpp](../Item\ItemsLibrary.cpp) | C++ | 273 | 4 | 49 | 326 | 1.44% |
+| [Item\ItemsLibrary.cpp](../Item\ItemsLibrary.cpp) | C++ | 274 | 3 | 49 | 326 | 1.08% |
 | [Item\ItemsLibrary.h](../Item\ItemsLibrary.h) | C++ | 91 | 15 | 33 | 139 | 14.15% |
 | [Item\STR_Attribute.h](../Item\STR_Attribute.h) | C++ | 15 | 0 | 4 | 19 | 0.00% |
 | [Item\STR_CostValue.h](../Item\STR_CostValue.h) | C++ | 19 | 0 | 5 | 24 | 0.00% |
 | [Item\STR_Item.h](../Item\STR_Item.h) | C++ | 21 | 0 | 4 | 25 | 0.00% |
-| [Item\STR_ItemData.h](../Item\STR_ItemData.h) | C++ | 62 | 6 | 10 | 78 | 8.82% |
-| [Item\STR_ItemInstance.h](../Item\STR_ItemInstance.h) | C++ | 54 | 7 | 14 | 75 | 11.48% |
+| [Item\STR_ItemData.h](../Item\STR_ItemData.h) | C++ | 65 | 4 | 10 | 79 | 5.80% |
+| [Item\STR_ItemInstance.h](../Item\STR_ItemInstance.h) | C++ | 57 | 5 | 14 | 76 | 8.06% |
 | [Item\STR_ResourceValue.h](../Item\STR_ResourceValue.h) | C++ | 15 | 0 | 4 | 19 | 0.00% |
 | [Map_Render\My_MapMark.cpp](../Map_Render\My_MapMark.cpp) | C++ | 155 | 10 | 62 | 227 | 6.06% |
 | [Map_Render\My_MapMark.h](../Map_Render\My_MapMark.h) | C++ | 80 | 4 | 39 | 123 | 4.76% |
