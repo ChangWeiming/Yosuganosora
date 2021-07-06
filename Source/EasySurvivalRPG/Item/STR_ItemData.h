@@ -4,7 +4,10 @@
 #include "GameplayTagContainer.h"
 #include "Engine/DataTable.h"
 #include "Engine/Texture2D.h"
+
 #include "STR_Attribute.h"
+#include "STR_ResourceValue.h"
+#include "STR_CostValue.h"
 
 #include "STR_ItemData.generated.h"
 
@@ -56,8 +59,8 @@ public:
 	//Game control
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FGameplayTagContainer ItemTags;
-	//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	//	FSTRCostValue CostValue;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FSTR_CostValue CostValue;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FSTR_Attribute EquipmentAttributes;
 

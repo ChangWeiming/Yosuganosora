@@ -1,0 +1,75 @@
+Date : 2021-07-01 15:39:38
+Directory : ./
+Total : 42 files,  2986 codes, 429 comments, 876 blanks, all 4291 lines, 12.56% comment rate
+
+Languages
++----------+------------+------------+------------+------------+------------+--------------+
+| language | files      | code       | comment    | blank      | total      | comment rate |
++----------+------------+------------+------------+------------+------------+--------------+
+| C++      |         41 |      2,976 |        423 |        868 |      4,267 |       12.44% |
+| C#       |          1 |         10 |          6 |          8 |         24 |       37.50% |
++----------+------------+------------+------------+------------+------------+--------------+
+
+Directories
++-------------------------------------------+------------+------------+------------+------------+------------+--------------+
+| path                                      | files      | code       | comment    | blank      | total      | comment rate |
++-------------------------------------------+------------+------------+------------+------------+------------+--------------+
+| .                                         |         42 |      2,986 |        429 |        876 |      4,291 |       12.56% |
+| Item                                      |         11 |        717 |         43 |        163 |        923 |        5.66% |
+| Map_Render                                |          6 |        629 |         92 |        244 |        965 |       12.76% |
+| Character                                 |          2 |        605 |        164 |         93 |        862 |       21.33% |
+| ContainerComponent                        |          2 |        417 |         36 |        101 |        554 |        7.95% |
+| Ability                                   |          4 |        254 |         24 |        114 |        392 |        8.63% |
+| craft                                     |          4 |        168 |         22 |         66 |        256 |       11.58% |
+| AI                                        |          6 |        150 |         30 |         64 |        244 |       16.67% |
+| Enumerations                              |          4 |         31 |         10 |         16 |         57 |       24.39% |
++-------------------------------------------+------------+------------+------------+------------+------------+--------------+
+
+Files
++-------------------------------------------+----------+------------+------------+------------+------------+--------------+
+| filename                                  | language | code       | comment    | blank      | total      | comment rate |
++-------------------------------------------+----------+------------+------------+------------+------------+--------------+
+| AI\AI_Decorator_InSigth.cpp               | C++      |         40 |          1 |         19 |         60 |        2.44% |
+| AI\AI_Decorator_InSigth.h                 | C++      |         21 |         13 |         14 |         48 |       38.24% |
+| AI\S_AIController_Base.cpp                | C++      |         10 |          1 |          6 |         17 |        9.09% |
+| AI\S_AIController_Base.h                  | C++      |         22 |          4 |          7 |         33 |       15.38% |
+| AI\S_AI_Decorator_InRange.cpp             | C++      |         37 |          7 |         10 |         54 |       15.91% |
+| AI\S_AI_Decorator_InRange.h               | C++      |         20 |          4 |          8 |         32 |       16.67% |
+| Ability\S_Ability_Base.cpp                | C++      |         33 |          7 |         13 |         53 |       17.50% |
+| Ability\S_Ability_Base.h                  | C++      |         23 |          4 |         10 |         37 |       14.81% |
+| Ability\S_Ability_Shoot_Trace.cpp         | C++      |        142 |          7 |         76 |        225 |        4.70% |
+| Ability\S_Ability_Shoot_Trace.h           | C++      |         56 |          6 |         15 |         77 |        9.68% |
+| Character\Character_Base.cpp              | C++      |        472 |        123 |         56 |        651 |       20.67% |
+| Character\Character_Base.h                | C++      |        133 |         41 |         37 |        211 |       23.56% |
+| ContainerComponent\ContainerComponent.cpp | C++      |        316 |         17 |         64 |        397 |        5.11% |
+| ContainerComponent\ContainerComponent.h   | C++      |        101 |         19 |         37 |        157 |       15.83% |
+| EasySurvivalRPG.Build.cs                  | C#       |         10 |          6 |          8 |         24 |       37.50% |
+| EasySurvivalRPG.cpp                       | C++      |          3 |          1 |          3 |          7 |       25.00% |
+| EasySurvivalRPG.h                         | C++      |          2 |          1 |          4 |          7 |       33.33% |
+| Enumerations\E_Fraction.cpp               | C++      |          1 |          1 |          4 |          6 |       50.00% |
+| Enumerations\E_Fraction.h                 | C++      |         11 |          4 |          4 |         19 |       26.67% |
+| Enumerations\E_InteractionState.cpp       | C++      |          1 |          1 |          4 |          6 |       50.00% |
+| Enumerations\E_InteractionState.h         | C++      |         18 |          4 |          4 |         26 |       18.18% |
+| Item\E_ResourceType.h                     | C++      |          9 |          0 |          3 |         12 |        0.00% |
+| Item\Item.cpp                             | C++      |        103 |          7 |         21 |        131 |        6.36% |
+| Item\Item.h                               | C++      |         55 |          4 |         16 |         75 |        6.78% |
+| Item\ItemsLibrary.cpp                     | C++      |        273 |          4 |         49 |        326 |        1.44% |
+| Item\ItemsLibrary.h                       | C++      |         91 |         15 |         33 |        139 |       14.15% |
+| Item\STR_Attribute.h                      | C++      |         15 |          0 |          4 |         19 |        0.00% |
+| Item\STR_CostValue.h                      | C++      |         19 |          0 |          5 |         24 |        0.00% |
+| Item\STR_Item.h                           | C++      |         21 |          0 |          4 |         25 |        0.00% |
+| Item\STR_ItemData.h                       | C++      |         62 |          6 |         10 |         78 |        8.82% |
+| Item\STR_ItemInstance.h                   | C++      |         54 |          7 |         14 |         75 |       11.48% |
+| Item\STR_ResourceValue.h                  | C++      |         15 |          0 |          4 |         19 |        0.00% |
+| Map_Render\My_MapMark.cpp                 | C++      |        155 |         10 |         62 |        227 |        6.06% |
+| Map_Render\My_MapMark.h                   | C++      |         80 |          4 |         39 |        123 |        4.76% |
+| Map_Render\My_UI_WorldMark.cpp            | C++      |         79 |         15 |         29 |        123 |       15.96% |
+| Map_Render\My_UI_WorldMark.h              | C++      |         24 |          4 |          7 |         35 |       14.29% |
+| Map_Render\S_Map_RenderActor.cpp          | C++      |        214 |         52 |         79 |        345 |       19.55% |
+| Map_Render\S_Map_RenderActor.h            | C++      |         77 |          7 |         28 |        112 |        8.33% |
+| craft\STR_Blueprint.h                     | C++      |         31 |          4 |         14 |         49 |       11.43% |
+| craft\STR_QueueBlueprint.h                | C++      |         17 |          4 |          4 |         25 |       19.05% |
+| craft\S_CraftingComponent.cpp             | C++      |         73 |         10 |         31 |        114 |       12.05% |
+| craft\S_CraftingComponent.h               | C++      |         47 |          4 |         17 |         68 |        7.84% |
+| Total                                     |          |      2,986 |        429 |        876 |      4,291 |       12.56% |
++-------------------------------------------+----------+------------+------------+------------+------------+--------------+
